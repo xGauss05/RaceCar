@@ -97,7 +97,7 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0, 12, 10);
+	vehicle->SetPos(0, 5, 0);
 	
 	return true;
 }
@@ -117,7 +117,8 @@ update_status ModulePlayer::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
-		acceleration = MAX_ACCELERATION;
+		acceleration += MAX_ACCELERATION;
+		brake = BRAKE_POWER;
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
@@ -135,8 +136,8 @@ update_status ModulePlayer::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
 		//brake = BRAKE_POWER;
-		acceleration = -MAX_ACCELERATION;
-
+		acceleration += -MAX_ACCELERATION;
+		brake = BRAKE_POWER;
 	}
 
 	vehicle->ApplyEngineForce(acceleration);
