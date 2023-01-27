@@ -16,6 +16,9 @@ struct Circuit {
 
 	Cube obstacle;
 	PhysBody3D* obstacleBody;
+
+	Cube sandTerrain;
+	PhysBody3D* sandTerrainBody;
 };
 
 class ModuleSceneIntro : public Module
