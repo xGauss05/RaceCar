@@ -18,7 +18,12 @@ struct Circuit {
 	PhysBody3D* obstacleBody;
 
 	// goal
+	Cube columnGoalLeft;
+	Cube columnGoalRight;
+	Cube goalTopPart;
 
+	// path
+	Cube sandPath;
 
 	Cube sandTerrain;
 	PhysBody3D* sandTerrainBody;

@@ -18,6 +18,22 @@ void Circuit::Start() {
 	sandTerrain.color.Set(1, 0.945f, 0.686f);
 	sandTerrainBody = App->physics->AddBody(sandTerrain, 0);
 
+	sandPath.SetPos(0, 0, 0);
+	sandPath.size.Set(20, 0.5f, 100);
+	sandPath.color.Set(0.989f, 0.873f, 0.451f);
+
+
+	columnGoalLeft.SetPos(-5, 2, 0);
+	columnGoalLeft.size.Set(0.1f, 10, 0.1f);
+	columnGoalLeft.color.Set(0.2f, 0.2f, 0.2f);
+
+	columnGoalRight.SetPos(5, 2, 0);
+	columnGoalRight.size.Set(0.1f, 10, 0.1f);
+	columnGoalRight.color.Set(0.2f, 0.2f, 0.2f);
+
+	goalTopPart.SetPos(0, 6, 0);
+	goalTopPart.size.Set(10, 2, 0.1f);
+	goalTopPart.color.Set(1, 0, 0);
 }
 
 void Circuit::Render() {
@@ -26,6 +42,12 @@ void Circuit::Render() {
 
 	sandTerrainBody->GetTransform(sandTerrain.transform.M);
 	sandTerrain.Render();
+
+	columnGoalLeft.Render();
+	columnGoalRight.Render();
+	goalTopPart.Render();
+
+	sandPath.Render();
 }
 
 // --------------------------------------------------
