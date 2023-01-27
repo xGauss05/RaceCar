@@ -96,7 +96,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	frontDirectionVehicle.z = vehicleTransform.M[10];
 
 	newPosCamera -= frontDirectionVehicle * 25;
-	newPosCamera.y += 5;
+	newPosCamera.y += 10;
 	newPosCamera += cameraPositionAroundPlayer;
 
 	//newPosCamera.y += 10;
