@@ -10,11 +10,12 @@ struct PhysBody3D;
 struct PhysMotor3D;
 
 struct Circuit {
+	void Start();
 
-	/*void Render() {
-		App.
-	}*/
+	void Render();
 
+	Cube obstacle;
+	PhysBody3D* obstacleBody;
 };
 
 class ModuleSceneIntro : public Module
@@ -31,11 +32,7 @@ public:
 
 public:
 
-	Cube obstacle;
-	PhysBody3D* obstacleBody;
-
-
-
+	Circuit circuit;
 
 	/*
 	PhysBody3D* pb_snake[MAX_SNAKE];
