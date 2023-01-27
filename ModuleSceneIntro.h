@@ -9,10 +9,18 @@
 struct PhysBody3D;
 struct PhysMotor3D;
 
+struct Circuit {
+
+	/*void Render() {
+		App.
+	}*/
+
+};
+
 class ModuleSceneIntro : public Module
 {
 public:
-	ModuleSceneIntro(Application* app, bool start_enabled = true);
+	ModuleSceneIntro(bool start_enabled = true);
 	~ModuleSceneIntro();
 
 	bool Start();
@@ -22,6 +30,13 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
 public:
+
+	Cube obstacle;
+	PhysBody3D* obstacleBody;
+
+
+
+
 	/*
 	PhysBody3D* pb_snake[MAX_SNAKE];
 	Sphere s_snake[MAX_SNAKE];
@@ -30,7 +45,7 @@ public:
 	Sphere s_snake2[MAX_SNAKE];
 	*/
 
-	PhysBody3D* pb_chassis;
+	/*PhysBody3D* pb_chassis;
 	Cube p_chassis;
 
 	PhysBody3D* pb_wheel;
@@ -40,5 +55,5 @@ public:
 	Cylinder p_wheel2;
 
 	PhysMotor3D* left_wheel;
-	PhysMotor3D* right_wheel;
+	PhysMotor3D* right_wheel;*/
 };
