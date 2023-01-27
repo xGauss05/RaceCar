@@ -37,6 +37,8 @@ public:
 
 	Circuit circuit;
 
+	vec3 cameraPositionAroundPlayer;
+
 	/*
 	PhysBody3D* pb_snake[MAX_SNAKE];
 	Sphere s_snake[MAX_SNAKE];

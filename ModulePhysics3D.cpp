@@ -17,7 +17,7 @@
 
 ModulePhysics3D::ModulePhysics3D(bool start_enabled) : Module(start_enabled)
 {
-	debug = true;
+	debug = false;
 
 	collision_conf = new btDefaultCollisionConfiguration();
 	dispatcher = new btCollisionDispatcher(collision_conf);
