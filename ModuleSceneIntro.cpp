@@ -22,7 +22,6 @@ void Circuit::Start() {
 	sandPath.size.Set(20, 0.5f, 100);
 	sandPath.color.Set(0.989f, 0.873f, 0.451f);
 
-
 	columnGoalLeft.SetPos(-5, 2, 0);
 	columnGoalLeft.size.Set(0.1f, 10, 0.1f);
 	columnGoalLeft.color.Set(0.2f, 0.2f, 0.2f);
@@ -90,44 +89,26 @@ update_status ModuleSceneIntro::Update(float dt)
 	p.axis = true;
 	p.Render();*/
 	
-	float speed = 0.5f;
+	if (!App->camera->cameraDebug) {
+		vec3 newPosCamera = App->player->vehicle->GetPosition();
 
-	//if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) cameraPositionAroundPlayer += App->camera->Y * speed;
-	//if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) cameraPositionAroundPlayer -= App->camera->Y * speed;
+		mat4x4 vehicleTransform;
 
-	//if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) cameraPositionAroundPlayer -= App->camera->Z * speed;
-	//if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) cameraPositionAroundPlayer += App->camera->Z * speed;
+		App->player->vehicle->GetTransform(vehicleTransform.M);
 
-	//if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) cameraPositionAroundPlayer -= App->camera->X * speed;
-	//if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) cameraPositionAroundPlayer += App->camera->X * speed;
+		vec3 frontDirectionVehicle;
+		frontDirectionVehicle.x = vehicleTransform.M[8];
+		frontDirectionVehicle.y = vehicleTransform.M[9];
+		frontDirectionVehicle.z = vehicleTransform.M[10];
 
-	vec3 newPosCamera = App->player->vehicle->GetPosition();
-	
-	/*if(App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
-		speed = 8.0f * dt;*/
+		newPosCamera -= frontDirectionVehicle * 25;
+		newPosCamera.y += 10;
+		newPosCamera += cameraPositionAroundPlayer;
 
-	//App->camera->LookAt(newPosCamera);
+		App->camera->Position = newPosCamera;
 
-	mat4x4 vehicleTransform;
-
-	App->player->vehicle->GetTransform(vehicleTransform.M);
-
-	vec3 frontDirectionVehicle;
-	frontDirectionVehicle.x = vehicleTransform.M[8];
-	frontDirectionVehicle.y = vehicleTransform.M[9];
-	frontDirectionVehicle.z = vehicleTransform.M[10];
-
-	newPosCamera -= frontDirectionVehicle * 25;
-	newPosCamera.y += 10;
-	newPosCamera += cameraPositionAroundPlayer;
-
-	//newPosCamera.y += 10;
-
-	//newPosCamera += App->camera->Z * 15;
-
-	App->camera->Position = newPosCamera;
-
-	App->camera->LookAt(App->player->vehicle->GetPosition());
+		App->camera->LookAt(App->player->vehicle->GetPosition());
+	}
 
 	circuit.Render();
 

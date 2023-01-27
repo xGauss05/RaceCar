@@ -24,6 +24,8 @@ private:
 
 public:
 	
+	bool cameraDebug;
+
 	vec3 X, Y, Z, Position, Reference;
 
 private:
