@@ -151,7 +151,7 @@ update_status ModulePlayer::Update(float dt)
 	{
 		//brake = BRAKE_POWER;
 		acceleration += -MAX_ACCELERATION;
-		//brake = BRAKE_POWER;
+		brake = turbo;
 	}
 
 	vehicle->ApplyEngineForce(acceleration);
