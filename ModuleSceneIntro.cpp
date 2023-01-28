@@ -17,6 +17,7 @@ void Circuit::Start() {
 	sandTerrain.size.Set(125, 2, 175);
 	sandTerrain.color.Set(1, 0.945f, 0.686f);
 	sandTerrainBody = App->physics->AddBody(sandTerrain, 0);
+	
 
 	sandPath.SetPos(0, 1, 0);
 	sandPath.size.Set(20, 0.5f, 100);
@@ -74,9 +75,25 @@ void Circuit::Start() {
 		stairsBody7 = App->physics->AddBody(stairs7, 0);
 	}
 	
+
+
+	// sensors
+	{
+		bottomSensor.SetPos(10, 10, 0);
+		bottomSensor.size.Set(10, 2, 10);
+		bottomSensor.color.Set(1, 0.945f, 0.686f);
+		bottomSensorBody = App->physics->AddBody(bottomSensor, 0);
+		bottomSensorBody->SetAsSensor(true);
+		bottomSensorBody->collision_listeners.add(App->scene_intro);
+		bottomSensorBody->id = 2; 
+	}
 }
 
 void Circuit::Render() {
+	
+	bottomSensorBody->GetTransform(bottomSensor.transform.M);
+	bottomSensor.Render();
+
 	obstacleBody->GetTransform(obstacle.transform.M);
 	obstacle.Render();
 
@@ -183,5 +200,8 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
+	if (body2->id == 2) {
+		LOG("Cube touched vehicle");
+	}
 }
 

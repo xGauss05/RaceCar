@@ -3,6 +3,7 @@
 #include "Globals.h"
 #include "p2Point.h"
 
+
 struct PhysVehicle3D;
 
 #define MAX_ACCELERATION 1000.0f
@@ -17,9 +18,13 @@ public:
 
 	bool Start();
 	update_status Update(float dt);
+	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	bool CleanUp();
 	
 public:
+
+	Cube vehicleSensor;
+	PhysBody3D* vehicleSensorBody;
 
 	PhysVehicle3D* vehicle;
 	float turn;

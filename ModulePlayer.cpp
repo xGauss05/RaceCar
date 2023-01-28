@@ -96,8 +96,18 @@ bool ModulePlayer::Start()
 	car.wheels[3].brake = true;
 	car.wheels[3].steering = false;
 
+	vehicleSensor.SetPos(10, 10, 0);
+	vehicleSensor.size.Set(5, 3, 5);
+	vehicleSensor.color.Set(0, 0, 1);
+	vehicleSensorBody = App->physics->AddBody(vehicleSensor, 1);
+	vehicleSensorBody->SetAsSensor(true);
+	vehicleSensorBody->collision_listeners.add(this);
+	vehicleSensorBody->id = 1;
+
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->SetPos(0, 5, 0);
+	
+	vehicle->collision_listeners.add(this);
 	
 	return true;
 }
@@ -114,6 +124,11 @@ bool ModulePlayer::CleanUp()
 update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
+	
+	vehicle->GetTransform(vehicleSensor.transform.M);
+	vehicleSensorBody->SetTransform(vehicleSensor.transform.M);
+	
+	vehicleSensor.Render();
 
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
 		mat4x4 baseTranform;
@@ -121,7 +136,11 @@ update_status ModulePlayer::Update(float dt)
 		vehicle->SetAngularVelocity(0, 0, 0);
 		vehicle->SetLinearVelocity(0, 0, 0);
 		vehicle->SetPos(0, 5, 0);
+	}
 
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) 
+	{
+		vehicle->Push(0, 30, 0);
 	}
 
 	float turbo = 0;
@@ -167,5 +186,14 @@ update_status ModulePlayer::Update(float dt)
 	return UPDATE_CONTINUE;
 }
 
-
+void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2) 
+{
+	LOG("OnCollision vehicle");
+	switch (body2->id) {
+	case 2:
+		LOG("Me touched SENSOR jeje");
+		break;
+	default: break;
+	}
+}
 
