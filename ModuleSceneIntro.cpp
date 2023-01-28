@@ -90,9 +90,9 @@ void Circuit::Start() {
 
 	// sensors
 	{
-		bottomSensor.SetPos(10, 10, 0);
-		bottomSensor.size.Set(10, 2, 10);
-		bottomSensor.color.Set(1, 0.945f, 0.686f);
+		bottomSensor.SetPos(0, -10, 0);
+		bottomSensor.size.Set(1000, 2, 1000);
+		bottomSensor.color.Set(0.8f, 0.3f, 0.2f);
 		bottomSensorBody = App->physics->AddBody(bottomSensor, 0);
 		bottomSensorBody->SetAsSensor(true);
 		bottomSensorBody->collision_listeners.add(App->scene_intro);

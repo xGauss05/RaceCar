@@ -189,9 +189,14 @@ update_status ModulePlayer::Update(float dt)
 void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2) 
 {
 	LOG("OnCollision vehicle");
+	mat4x4 baseTranform;
 	switch (body2->id) {
 	case 2:
-		LOG("Me touched SENSOR jeje");
+		
+		vehicle->SetTransform(baseTranform.M);
+		vehicle->SetAngularVelocity(0, 0, 0);
+		vehicle->SetLinearVelocity(0, 0, 0);
+		vehicle->SetPos(0, 5, 0);
 		break;
 	default: break;
 	}
