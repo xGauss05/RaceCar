@@ -35,7 +35,7 @@ void Circuit::Start() {
 	goalTopPart.size.Set(10, 2, 0.1f);
 	goalTopPart.color.Set(1, 0, 0);
 	
-	// stairs
+	// left stairs
 	{
 		stairs1.SetPos(0, 0.5f, 87.5f);
 		stairs1.size.Set(70, 2, 30);
@@ -73,6 +73,17 @@ void Circuit::Start() {
 		stairs7.size.Set(30, 2, 30);
 		stairs7.color.Set(0.510f, 0.435f, 0.463f);
 		stairsBody7 = App->physics->AddBody(stairs7, 0);
+
+		stairs8.SetPos(105, 35, 183.12f);
+		stairs8.size.Set(42.426f, 2, 42.426f);
+		stairs8.SetRotation(45, { 0, 1, 0 });
+		stairs8.color.Set(0.510f, 0.435f, 0.463f);
+		stairsBody8 = App->physics->AddBody(stairs8, 0);
+
+		stairs9.SetPos(120, 35, 168.12f);
+		stairs9.size.Set(30, 2, 30);
+		stairs9.color.Set(0.510f, 0.435f, 0.463f);
+		stairsBody9 = App->physics->AddBody(stairs9, 0);
 	}
 	
 
@@ -94,10 +105,11 @@ void Circuit::Render() {
 	bottomSensorBody->GetTransform(bottomSensor.transform.M);
 	bottomSensor.Render();
 
+	// for mobile objects
 	obstacleBody->GetTransform(obstacle.transform.M);
 	obstacle.Render();
 
-	sandTerrainBody->GetTransform(sandTerrain.transform.M);
+	// for static objects
 	sandTerrain.Render();
 
 	columnGoalLeft.Render();
@@ -108,27 +120,23 @@ void Circuit::Render() {
 
 	// stairs
 	{
-		stairsBody1->GetTransform(stairs1.transform.M);
 		stairs1.Render();
 
-		stairsBody2->GetTransform(stairs2.transform.M);
 		stairs2.Render();
 
-		stairsBody3->GetTransform(stairs3.transform.M);
 		stairs3.Render();
 
-		stairsBody4->GetTransform(stairs4.transform.M);
 		stairs4.Render();
 
-		stairsBody5->GetTransform(stairs5.transform.M);
 		stairs5.Render();
 		
-		stairsBody6->GetTransform(stairs6.transform.M);
 		stairs6.Render();
 
-		stairsBody7->GetTransform(stairs7.transform.M);
 		stairs7.Render();
 
+		stairs8.Render();
+
+		stairs9.Render();
 	}
 }
 
