@@ -48,6 +48,12 @@ struct Circuit {
 	Cube stairs7;
 	PhysBody3D* stairsBody7;
 
+	Cube stairs8;
+	PhysBody3D* stairsBody8;
+
+	Cube stairs9;
+	PhysBody3D* stairsBody9;
+
 	// path
 	Cube sandPath;
 
