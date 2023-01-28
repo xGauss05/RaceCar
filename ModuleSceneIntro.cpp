@@ -36,10 +36,32 @@ void Circuit::Start() {
 	
 	// stairs
 	{
-		stairs1.SetPos(0, 0.75f, 112.5f);
-		stairs1.size.Set(20, 2, 50);
+		stairs1.SetPos(0, 0, 87.5f);
+		stairs1.size.Set(70, 2, 30);
 		stairs1.color.Set(0.510f, 0.435f, 0.463f);
 		stairsBody1 = App->physics->AddBody(stairs1, 0);
+
+		stairs2.SetPos(0, 17.5f, 122.5f);
+		stairs2.size.Set(30, 2, 70);
+		stairs2.SetRotation(-30, { 1, 0, 0 });
+		stairs2.color.Set(0.510f, 0.435f, 0.463f);
+		stairsBody2 = App->physics->AddBody(stairs2, 0);
+
+		stairs3.SetPos(0, 35, 168.12f);
+		stairs3.size.Set(30, 2, 30);
+		stairs3.color.Set(0.510f, 0.435f, 0.463f);
+		stairsBody3 = App->physics->AddBody(stairs3, 0);
+
+		stairs4.SetPos(15, 35, 183.12f);
+		stairs4.size.Set(42.426f, 2, 42.426f);
+		stairs4.SetRotation(45, { 0, 1, 0 });
+		stairs4.color.Set(0.510f, 0.435f, 0.463f);
+		stairsBody4 = App->physics->AddBody(stairs4, 0);
+
+		stairs5.SetPos(30, 35, 198.12f);
+		stairs5.size.Set(30, 2, 30);
+		stairs5.color.Set(0.510f, 0.435f, 0.463f);
+		stairsBody5 = App->physics->AddBody(stairs5, 0);
 	}
 	
 }
@@ -61,6 +83,18 @@ void Circuit::Render() {
 	{
 		stairsBody1->GetTransform(stairs1.transform.M);
 		stairs1.Render();
+
+		stairsBody2->GetTransform(stairs2.transform.M);
+		stairs2.Render();
+
+		stairsBody3->GetTransform(stairs3.transform.M);
+		stairs3.Render();
+
+		stairsBody4->GetTransform(stairs4.transform.M);
+		stairs4.Render();
+
+		stairsBody5->GetTransform(stairs5.transform.M);
+		stairs5.Render();
 	}
 }
 
