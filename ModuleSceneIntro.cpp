@@ -8,31 +8,40 @@
 #include "PhysVehicle3D.h"
 
 void Circuit::Start() {
-	obstacle.SetPos(0, 1, 30);
+	obstacle.SetPos(0, 2, 30);
 	obstacle.size.Set(10, 10, 10);
 	obstacle.color.Set(0, 255, 255);
 	obstacleBody = App->physics->AddBody(obstacle, 1000);
 
-	sandTerrain.SetPos(0, -1, 0);
-	sandTerrain.size.Set(100, 2, 100);
+	sandTerrain.SetPos(0, 0, 0);
+	sandTerrain.size.Set(125, 2, 175);
 	sandTerrain.color.Set(1, 0.945f, 0.686f);
 	sandTerrainBody = App->physics->AddBody(sandTerrain, 0);
 
-	sandPath.SetPos(0, 0, 0);
+	sandPath.SetPos(0, 1, 0);
 	sandPath.size.Set(20, 0.5f, 100);
 	sandPath.color.Set(0.989f, 0.873f, 0.451f);
 
-	columnGoalLeft.SetPos(-5, 2, 0);
+	columnGoalLeft.SetPos(-5, 3, 0);
 	columnGoalLeft.size.Set(0.1f, 10, 0.1f);
 	columnGoalLeft.color.Set(0.2f, 0.2f, 0.2f);
 
-	columnGoalRight.SetPos(5, 2, 0);
+	columnGoalRight.SetPos(5, 3, 0);
 	columnGoalRight.size.Set(0.1f, 10, 0.1f);
 	columnGoalRight.color.Set(0.2f, 0.2f, 0.2f);
 
-	goalTopPart.SetPos(0, 6, 0);
+	goalTopPart.SetPos(0, 7, 0);
 	goalTopPart.size.Set(10, 2, 0.1f);
 	goalTopPart.color.Set(1, 0, 0);
+	
+	// stairs
+	{
+		stairs1.SetPos(0, 0.75f, 112.5f);
+		stairs1.size.Set(20, 2, 50);
+		stairs1.color.Set(0.510f, 0.435f, 0.463f);
+		stairsBody1 = App->physics->AddBody(stairs1, 0);
+	}
+	
 }
 
 void Circuit::Render() {
@@ -47,6 +56,12 @@ void Circuit::Render() {
 	goalTopPart.Render();
 
 	sandPath.Render();
+
+	// stairs
+	{
+		stairsBody1->GetTransform(stairs1.transform.M);
+		stairs1.Render();
+	}
 }
 
 // --------------------------------------------------

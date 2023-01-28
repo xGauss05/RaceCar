@@ -22,11 +22,39 @@ struct Circuit {
 	Cube columnGoalRight;
 	Cube goalTopPart;
 
+	// sand area
+	Cube sandTerrain;
+	PhysBody3D* sandTerrainBody;
+
+	// stairs
+	Cube stairs1;
+	PhysBody3D* stairsBody1;
+
+	Cube stairs2;
+	PhysBody3D* stairsBody2;
+
+	Cube stairs3;
+	PhysBody3D* stairsBody3;
+
+	Cube stairs4;
+	PhysBody3D* stairsBody4;
+
+	Cube stairs5;
+	PhysBody3D* stairsBody5;
+
+	Cube stairs6;
+	PhysBody3D* stairsBody6;
+
+	Cube stairs7;
+	PhysBody3D* stairsBody7;
+
+	Cube stairs8;
+	PhysBody3D* stairsBody8;
+
 	// path
 	Cube sandPath;
 
-	Cube sandTerrain;
-	PhysBody3D* sandTerrainBody;
+
 };
 
 class ModuleSceneIntro : public Module
