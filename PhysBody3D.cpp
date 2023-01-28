@@ -21,7 +21,7 @@ void PhysBody3D::Push(float x, float y, float z)
 // ---------------------------------------------------------
 void PhysBody3D::GetTransform(float* matrix) const
 {
-	if(body != NULL && matrix != NULL)
+	if (body != NULL && matrix != NULL)
 	{
 		body->getWorldTransform().getOpenGLMatrix(matrix);
 	}
@@ -30,7 +30,7 @@ void PhysBody3D::GetTransform(float* matrix) const
 // ---------------------------------------------------------
 void PhysBody3D::SetTransform(const float* matrix) const
 {
-	if(body != NULL && matrix != NULL)
+	if (body != NULL && matrix != NULL)
 	{
 		btTransform t;
 		t.setFromOpenGLMatrix(matrix);
@@ -51,10 +51,13 @@ void PhysBody3D::SetAsSensor(bool is_sensor)
 	if (this->is_sensor != is_sensor)
 	{
 		this->is_sensor = is_sensor;
-		if (is_sensor == true)
+		if (is_sensor == true) {
+			
 			body->setCollisionFlags(body->getCollisionFlags() | btCollisionObject::CF_NO_CONTACT_RESPONSE);
-		else
+		}
+		else {
 			body->setCollisionFlags(body->getCollisionFlags() & ~btCollisionObject::CF_NO_CONTACT_RESPONSE);
+		}
 	}
 }
 
@@ -73,7 +76,7 @@ vec3 PhysBody3D::GetPosition()
 
 void PhysBody3D::SetLinearVelocity(float x, float y, float z)
 {
-	body->setLinearVelocity({x, y, z});
+	body->setLinearVelocity({ x, y, z });
 }
 
 void PhysBody3D::SetAngularVelocity(float x, float y, float z)

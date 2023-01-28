@@ -19,7 +19,6 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 
 	VehicleInfo car;
-
 	// Car properties ----------------------------------------
 	car.chassis_size.Set(2, 2, 4);
 	car.chassis_offset.Set(0, 1.5, 0);
@@ -97,7 +96,7 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicleSensor.SetPos(10, 10, 0);
-	vehicleSensor.size.Set(5, 3, 5);
+	vehicleSensor.size.Set(5, 5, 5);
 	vehicleSensor.color.Set(0, 0, 1);
 	vehicleSensorBody = App->physics->AddBody(vehicleSensor, 1);
 	vehicleSensorBody->SetAsSensor(true);
@@ -121,6 +120,15 @@ bool ModulePlayer::CleanUp()
 }
 
 // Update: draw background
+void ModulePlayer::ResetGame() 
+{
+	mat4x4 baseTranform;
+	vehicle->SetTransform(baseTranform.M);
+	vehicle->SetAngularVelocity(0, 0, 0);
+	vehicle->SetLinearVelocity(0, 0, 0);
+	vehicle->SetPos(0, 5, 0);
+}
+
 update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
@@ -131,13 +139,11 @@ update_status ModulePlayer::Update(float dt)
 	vehicleSensor.Render();
 
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
-		mat4x4 baseTranform;
-		vehicle->SetTransform(baseTranform.M);
-		vehicle->SetAngularVelocity(0, 0, 0);
-		vehicle->SetLinearVelocity(0, 0, 0);
-		vehicle->SetPos(0, 5, 0);
+		ResetGame();
 	}
-
+	if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
+		vehicle->info.mass += 1;
+	}
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) 
 	{
 		vehicle->Push(0, 30, 0);
@@ -189,14 +195,11 @@ update_status ModulePlayer::Update(float dt)
 void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2) 
 {
 	LOG("OnCollision vehicle");
-	mat4x4 baseTranform;
+	
 	switch (body2->id) {
 	case 2:
+		ResetGame();
 		
-		vehicle->SetTransform(baseTranform.M);
-		vehicle->SetAngularVelocity(0, 0, 0);
-		vehicle->SetLinearVelocity(0, 0, 0);
-		vehicle->SetPos(0, 5, 0);
 		break;
 	default: break;
 	}
