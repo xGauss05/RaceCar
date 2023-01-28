@@ -54,4 +54,5 @@ public:
 
 	VehicleInfo info;
 	btRaycastVehicle* vehicle;
+	
 };

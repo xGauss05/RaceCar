@@ -29,7 +29,7 @@ bool ModulePlayer::Start()
 	car.maxSuspensionTravelCm = 1000.0f;
 	car.frictionSlip = 200;
 	car.maxSuspensionForce = 6000.0f;
-
+	mass = car.mass;
 	// Wheel properties ---------------------------------------
 	float connection_height = 1.2f;
 	float wheel_radius = 0.6f;
@@ -141,9 +141,17 @@ update_status ModulePlayer::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
 		ResetGame();
 	}
-	if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN) {
-		vehicle->info.mass += 1;
+	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) {
+		mass += 10.0f;
+		vehicle->vehicle->getRigidBody()->setMassProps(mass, vehicle->vehicle->getRigidBody()->getLocalInertia());
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) 
+	{
+		mass -= 10.0f;
+		vehicle->vehicle->getRigidBody()->setMassProps(mass, vehicle->vehicle->getRigidBody()->getLocalInertia());
+	}
+
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) 
 	{
 		vehicle->Push(0, 30, 0);
