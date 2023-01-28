@@ -124,25 +124,30 @@ update_status ModulePlayer::Update(float dt)
 
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	float turbo = 0;
+	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
+		turbo = 500;
+	}
+
+	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
-		acceleration += MAX_ACCELERATION;
+		acceleration += MAX_ACCELERATION + turbo;
 		//brake = BRAKE_POWER;
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		if(turn < TURN_DEGREES)
 			turn +=  TURN_DEGREES;
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		if(turn > -TURN_DEGREES)
 			turn -= TURN_DEGREES;
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
 		//brake = BRAKE_POWER;
 		acceleration += -MAX_ACCELERATION;
