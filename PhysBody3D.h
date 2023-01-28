@@ -22,6 +22,10 @@ public:
 	
 	vec3 GetPosition();
 
+	void SetLinearVelocity(float x, float y, float z);
+	void SetAngularVelocity(float x, float y, float z);
+
+
 private:
 	btRigidBody* body = nullptr;
 

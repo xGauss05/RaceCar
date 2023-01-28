@@ -28,7 +28,7 @@ bool ModulePlayer::Start()
 	car.suspensionCompression = 0.83f;
 	car.suspensionDamping = 0.88f;
 	car.maxSuspensionTravelCm = 1000.0f;
-	car.frictionSlip = 50.5;
+	car.frictionSlip = 200;
 	car.maxSuspensionForce = 6000.0f;
 
 	// Wheel properties ---------------------------------------
@@ -114,6 +114,15 @@ bool ModulePlayer::CleanUp()
 update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
+
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
+		mat4x4 baseTranform;
+		vehicle->SetTransform(baseTranform.M);
+		vehicle->SetAngularVelocity(0, 0, 0);
+		vehicle->SetLinearVelocity(0, 0, 0);
+		vehicle->SetPos(0, 5, 0);
+
+	}
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
