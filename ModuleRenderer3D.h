@@ -19,7 +19,13 @@ public:
 
 	void OnResize(int width, int height);
 
+	int LoadTexture(const char* path);
+
+	void DrawTexture(uint texture, vec3 pos, float size, bool orientationY = true);
+
 public:
+
+	p2List<int> textures;
 
 	Light lights[MAX_LIGHTS];
 	SDL_GLContext context;
