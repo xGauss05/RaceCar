@@ -162,6 +162,21 @@ struct Circuit {
 	// path
 	Cube sandPath;
 
+	// cacti
+	Cube cactus1;
+	PhysBody3D* cactusBody1;
+
+	Cube cactus2;
+	PhysBody3D* cactusBody2;
+
+	Cube cactus3;
+	PhysBody3D* cactusBody3;
+
+	Cube cactus4;
+	PhysBody3D* cactusBody4;
+
+	Cube cactus5;
+	PhysBody3D* cactusBody5;
 
 };
 
