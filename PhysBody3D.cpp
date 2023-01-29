@@ -83,3 +83,8 @@ void PhysBody3D::SetAngularVelocity(float x, float y, float z)
 {
 	body->setAngularVelocity({ x, y, z });
 }
+
+void PhysBody3D::SetGravity(float x, float y, float z)
+{
+	body->setGravity({x, y, z});
+}

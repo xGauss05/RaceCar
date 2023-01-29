@@ -389,6 +389,12 @@ void ModulePhysics3D::AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, c
 	hinge->setDbgDrawSize(2.0f);
 }
 
+btVector3 ModulePhysics3D::getCurrentGravity()
+{
+	btVector3 currentGravity = world->getGravity();
+	return currentGravity;
+}
+
 // =============================================
 void DebugDrawer::drawLine(const btVector3& from, const btVector3& to, const btVector3& color)
 {

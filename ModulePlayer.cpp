@@ -218,6 +218,7 @@ update_status ModulePlayer::Update(float dt)
 	{
 		if (activeGravity) {
 			activeGravity = false;
+			
 		}
 		else {
 			activeGravity = true;
@@ -225,7 +226,7 @@ update_status ModulePlayer::Update(float dt)
 	}
 
 	if (!activeGravity) {
-		App->physics->ModifyGravity({ 0, 0,0 });
+		vehicle->SetGravity(0, 0, 0);
 	}
 
 

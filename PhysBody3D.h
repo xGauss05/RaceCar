@@ -24,6 +24,7 @@ public:
 
 	void SetLinearVelocity(float x, float y, float z);
 	void SetAngularVelocity(float x, float y, float z);
+	void SetGravity(float x, float y, float z);
 
 
 private:
