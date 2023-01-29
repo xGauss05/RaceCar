@@ -232,7 +232,7 @@ update_status ModulePlayer::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		if (activeImpulse) vehicle->Push(0, 3000, 0);
+		if (activeImpulse) vehicle->Push(0, 5000, 0);
 		
 		if (!playJumpFx)
 		{
