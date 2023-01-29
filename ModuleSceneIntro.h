@@ -121,6 +121,31 @@ struct Circuit {
 	Cube corridor13;
 	PhysBody3D* corridorBody13;
 
+	// walls 
+	Cube wall1;
+	PhysBody3D* wallBody1;
+
+	Cube wall2;
+	PhysBody3D* wallBody2;
+
+	Cube wall3;
+	PhysBody3D* wallBody3;
+
+	Cube wall4;
+	PhysBody3D* wallBody4;
+
+	Cube wall5;
+	PhysBody3D* wallBody5;
+
+	Cube wall6;
+	PhysBody3D* wallBody6;
+
+	Cube wall7;
+	PhysBody3D* wallBody7;
+
+	Cube wall8;
+	PhysBody3D* wallBody8;
+
 	// path
 	Cube sandPath;
 

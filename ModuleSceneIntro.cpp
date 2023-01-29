@@ -189,7 +189,30 @@ void Circuit::Start() {
 
 	}
 
+	// walls
+	{
+		Color color;
+		color.Set(0.510f, 0.435f, 0.463f);
 
+		corridor3.SetPos(120, 35, 0);
+		corridor3.size.Set(30, 2, 70);
+		corridor3.color = color;
+		corridorBody3 = App->physics->AddBody(corridor3, 0);
+		corridorBody3->id = 5;
+
+		wall1.SetPos(105, 37.5f, 0);
+		wall1.size.Set(2, 5, 70);
+		wall1.color = color;
+		wallBody1 = App->physics->AddBody(wall1, 0);
+		wallBody1->id = 5;
+
+		wall2.SetPos(135, 37.5f, 0);
+		wall2.size.Set(2, 5, 70);
+		wall2.color = color;
+		wallBody2 = App->physics->AddBody(wall2, 0);
+		wallBody2->id = 5;
+
+	}
 
 	// sensors
 	{
@@ -349,6 +372,13 @@ void Circuit::Render() {
 		corridor12.Render();
 
 		corridor13.Render();
+	}
+
+	// walls
+	{
+		wall1.Render();
+
+		wall2.Render();
 	}
 }
 
