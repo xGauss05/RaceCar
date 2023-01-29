@@ -36,6 +36,11 @@ public:
 	float mass;
 	float timer;
 	bool firstcPoint;
+
+	bool activeGravity = true;
+	bool activeImpulse = true;
+	bool activeFriction = true;
 private:
 	uint checkpointFx;
+	uint lastTerrain = 0;
 };
