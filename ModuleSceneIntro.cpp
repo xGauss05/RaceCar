@@ -194,12 +194,6 @@ void Circuit::Start() {
 		Color color;
 		color.Set(0.510f, 0.435f, 0.463f);
 
-		corridor3.SetPos(120, 35, 0);
-		corridor3.size.Set(30, 2, 70);
-		corridor3.color = color;
-		corridorBody3 = App->physics->AddBody(corridor3, 0);
-		corridorBody3->id = 5;
-
 		wall1.SetPos(105, 37.5f, 0);
 		wall1.size.Set(2, 5, 70);
 		wall1.color = color;
@@ -265,6 +259,33 @@ void Circuit::Start() {
 		cpointGoalSensorBody = App->physics->AddBody(cpointGoalSensor, 0);
 		cpointGoalSensorBody->SetAsSensor(true);
 		cpointGoalSensorBody->id = 10;
+	}
+
+	// door 1
+	{
+		Color color;
+		color.Set(1, 1, 1);
+
+		vec3 position;
+		position = { 0, 8, 20 };
+
+		column1Left.SetPos(position.x, position.y, position.z);
+		column1Left.size.Set(0.1f, 10, 0.1f);
+		column1Left.color = color;
+		columnBody1Left = App->physics->AddBody(column1Left, 0);
+		columnBody1Left->SetAsSensor(true);
+		columnBody1Left->id = 5;
+
+		door1Left.SetPos(position.x, position.y, position.z - 5);
+		door1Left.size.Set(1, 10, 10);
+		door1Left.color = color;
+		doorBody1Left = App->physics->AddBody(door1Left, 100);
+		doorBody1Left->id = 5;
+		
+
+		App->physics->AddConstraintHinge(*doorBody1Left, *columnBody1Left, { 0, 0, 5 }, { 0, 0, 0 }, { 0, 1, 0 }, { 0, 1, 0 });
+
+
 	}
 }
 
@@ -379,6 +400,15 @@ void Circuit::Render() {
 		wall1.Render();
 
 		wall2.Render();
+	}
+
+	// door1
+	{
+		doorBody1Left->GetTransform(door1Left.transform.M);
+		door1Left.Render();
+		column1Left.Render();
+
+
 	}
 }
 

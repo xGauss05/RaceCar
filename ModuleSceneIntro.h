@@ -146,6 +146,19 @@ struct Circuit {
 	Cube wall8;
 	PhysBody3D* wallBody8;
 
+	// door
+	Cube door1Left;
+	PhysBody3D* doorBody1Left;
+
+	Cube column1Left;
+	PhysBody3D* columnBody1Left;
+
+	Cube door1Right;
+	PhysBody3D* doorBody1Right;
+
+	Cube column1Right;
+	PhysBody3D* columnBody1Right;
+
 	// path
 	Cube sandPath;
 
