@@ -28,7 +28,7 @@ bool ModulePlayer::Start()
 	car.suspensionCompression = 0.83f;
 	car.suspensionDamping = 0.88f;
 	car.maxSuspensionTravelCm = 1000.0f;
-	car.frictionSlip = 200;
+	car.frictionSlip = 5000;
 	car.maxSuspensionForce = 6000.0f;
 	mass = car.mass;
 	// Wheel properties ---------------------------------------
@@ -143,7 +143,16 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->GetTransform(vehicleSensor.transform.M);
 	vehicleSensorBody->SetTransform(vehicleSensor.transform.M);
 
-	vehicleSensor.Render();
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) 
+	{ 
+		vehicle->vehicle->m_wheelInfo[0].m_frictionSlip = 0.1; 
+		vehicle->vehicle->m_wheelInfo[1].m_frictionSlip = 0.1; 
+		vehicle->vehicle->m_wheelInfo[2].m_frictionSlip = 0.1; 
+		vehicle->vehicle->m_wheelInfo[3].m_frictionSlip = 0.1; 
+	}
+
+	if (App->physics->debug){ vehicleSensor.Render(); }
+
 	if (timer >= 0) timer -= dt;
 	
 	if (timer <= 0) ResetGame();
@@ -162,7 +171,7 @@ update_status ModulePlayer::Update(float dt)
 		vehicle->vehicle->getRigidBody()->setMassProps(mass, vehicle->vehicle->getRigidBody()->getLocalInertia());
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) 
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
 	{
 		vehicle->Push(0, 30, 0);
 	}
