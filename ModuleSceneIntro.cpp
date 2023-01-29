@@ -260,7 +260,7 @@ void Circuit::Start() {
 	// door 1
 	{
 		Color color;
-		color.Set(1, 1, 1);
+		color.Set(0.776f, 0.663f, 0.573f);
 
 		vec3 position;
 		position = { 60, 42, -183 };
