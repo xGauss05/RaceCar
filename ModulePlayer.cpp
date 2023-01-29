@@ -139,6 +139,12 @@ void ModulePlayer::ResetGame()
 	firstcPoint = secondcPoint = thirdcPoint = fourthcPoint = fifthcPoint = false;
 }
 
+void ModulePlayer::IncreaseLap() 
+{
+	laps++;
+	firstcPoint = secondcPoint = thirdcPoint = fourthcPoint = fifthcPoint = false;
+}
+
 void ModulePlayer::ChangeFriction(float friction)
 {
 	vehicle->vehicle->m_wheelInfo[0].m_frictionSlip = friction;
@@ -153,7 +159,6 @@ update_status ModulePlayer::Update(float dt)
 	
 	vehicle->GetTransform(vehicleSensor.transform.M);
 	vehicleSensorBody->SetTransform(vehicleSensor.transform.M);
-
 
 	if (App->physics->debug){ vehicleSensor.Render(); }
 
@@ -260,6 +265,8 @@ update_status ModulePlayer::Update(float dt)
 		brake = turbo;
 	}
 
+	
+
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
@@ -267,9 +274,13 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Render();
 
 	char title[80];
-	sprintf_s(title, "Sandy Shores Circuit | %.1f Km/h | Time: %.f s", vehicle->GetKmh(), timer);
+	sprintf_s(title, "Sandy Shores Circuit | %.1f Km/h | Time: %.f s | Lap: %d / 3", vehicle->GetKmh(), timer, laps);
+	
+	if (laps >= MAX_LAPS)
+	{
+		sprintf_s(title, "Sandy Shores Circuit | %.1f Km/h | Time: %.f s | Lap: %d / %d | Con fucking gratulations." , vehicle->GetKmh(), timer, laps, MAX_LAPS);
+	}
 	App->window->SetTitle(title);
-
 	return UPDATE_CONTINUE;
 }
 
@@ -337,6 +348,10 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 			timer += BONUS_TIME;
 			fifthcPoint = true;
 		}
+		break;
+	case 10:
+		LOG("Goal checkpoint");
+		IncreaseLap();
 		break;
 	default: break;
 	}

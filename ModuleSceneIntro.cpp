@@ -235,6 +235,13 @@ void Circuit::Start() {
 		cpoint5SensorBody = App->physics->AddBody(cpoint5Sensor, 0);
 		cpoint5SensorBody->SetAsSensor(true);
 		cpoint5SensorBody->id = 9;
+
+		cpointGoalSensor.SetPos(0, 0, 0);
+		cpointGoalSensor.size.Set(10, 10, 3);
+		cpointGoalSensor.color.Set(0.8f, 0.3f, 0.2f, 0.1f);
+		cpointGoalSensorBody = App->physics->AddBody(cpointGoalSensor, 0);
+		cpointGoalSensorBody->SetAsSensor(true);
+		cpointGoalSensorBody->id = 10;
 	}
 }
 
@@ -274,6 +281,13 @@ void Circuit::Render() {
 		cpoint5Sensor.Render();
 	}
 
+	if (App->player->firstcPoint && App->player->secondcPoint && App->player->thirdcPoint &&
+		App->player->fourthcPoint && App->player->fifthcPoint)
+	{
+		cpointGoalSensorBody->GetTransform(cpointGoalSensor.transform.M);
+		cpointGoalSensor.Render();
+	}
+	
 	// for mobile objects
 	obstacleBody->GetTransform(obstacle.transform.M);
 	obstacle.Render();

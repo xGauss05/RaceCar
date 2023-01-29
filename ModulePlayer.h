@@ -10,6 +10,7 @@ struct PhysVehicle3D;
 #define TURN_DEGREES 15.0f * DEGTORAD
 #define BRAKE_POWER 2.0f
 #define BONUS_TIME 5.0f
+#define MAX_LAPS 3
 
 class ModulePlayer : public Module
 {
@@ -22,7 +23,7 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	bool CleanUp();
 	void ResetGame();
-
+	void IncreaseLap();
 	void ChangeFriction(float friction);
 	
 public:
