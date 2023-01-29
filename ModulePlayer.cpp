@@ -19,6 +19,7 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 
 	checkpointFx = App->audio->LoadFx("Assets/Audio/Sfx/checkpoint.wav");
+	turboFx = App->audio->LoadFx("Assets/Audio/Sfx/turbo.wav");
 	VehicleInfo car;
 	// Car properties ----------------------------------------
 	car.chassis_size.Set(2, 2, 4);
@@ -238,6 +239,20 @@ update_status ModulePlayer::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
 		if (activeImpulse)
 			turbo = 500;
+		
+	}
+
+	if (turbo > 0) 
+	{
+		if (!playTurboFx) 
+		{
+			playTurboFx = true;
+			App->audio->PlayFx(turboFx);
+		}
+	}
+	else 
+	{
+		if (playTurboFx) playTurboFx = false;
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
