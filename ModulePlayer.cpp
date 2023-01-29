@@ -228,7 +228,7 @@ update_status ModulePlayer::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		if (activeImpulse) {
-			float jump = 60000 / (dt * 1000);
+			float jump = 10000000 * dt * dt;
 			LOG("dt = %f; jump = %f", dt, jump);
 			vehicle->Push(0, jump, 0);
 		}
