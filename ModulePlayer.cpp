@@ -25,12 +25,12 @@ bool ModulePlayer::Start()
 	
 	VehicleInfo car;
 	// Car properties ----------------------------------------
-	car.chassis_size.Set(2, 2, 4);
-	car.chassis_offset.Set(0, 1.5, 0);
+	car.chassis_size.Set(3, 1, 4);
+	car.chassis_offset.Set(0, 1, 0);
 	car.mass = 500.0f;
-	car.suspensionStiffness = 15.88f;
+	car.suspensionStiffness = 10.0f;
 	car.suspensionCompression = 0.83f;
-	car.suspensionDamping = 0.88f;
+	car.suspensionDamping = 1.0f;
 	car.maxSuspensionTravelCm = 1000.0f;
 	car.frictionSlip = 5000;
 	car.maxSuspensionForce = 6000.0f;
@@ -166,6 +166,20 @@ void ModulePlayer::ChangeFriction(float friction)
 	vehicle->vehicle->m_wheelInfo[3].m_frictionSlip = friction;
 }
 
+void ModulePlayer::StartDrift()
+{
+	drifting = true;
+	vehicle->vehicle->m_wheelInfo[0].m_frictionSlip = 0.7f;
+	vehicle->vehicle->m_wheelInfo[1].m_frictionSlip = 0.7f;
+	vehicle->vehicle->m_wheelInfo[2].m_frictionSlip = 0.5f;
+	vehicle->vehicle->m_wheelInfo[3].m_frictionSlip = 0.5f;
+}
+
+void ModulePlayer::EndDrift()
+{
+	drifting = false;
+}
+
 update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
@@ -218,7 +232,7 @@ update_status ModulePlayer::Update(float dt)
 				ChangeFriction(2.0f);
 				break;
 			case 1:
-				ChangeFriction(5000.0f);
+				ChangeFriction(800.0f);
 				break;
 			}
 
@@ -238,6 +252,15 @@ update_status ModulePlayer::Update(float dt)
 
 	if (!activeGravity) {
 		vehicle->SetGravity(0, 0, 0);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_DOWN)
+	{
+		StartDrift();
+	}
+	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_UP)
+	{
+		EndDrift();
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && canJump)
@@ -296,8 +319,7 @@ update_status ModulePlayer::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) 
 	{
 		if (activeImpulse)
-			turbo = 1200;
-		
+			turbo = 3000;
 	}
 
 	if (turbo > 0) 
@@ -390,13 +412,25 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		lastTerrain = 0;
 		canJump = true;
 		if (activeFriction)
-			ChangeFriction(2.0f);
+		{
+			if (!drifting)
+			{
+				ChangeFriction(2.0f);
+			}
+		}
+			
 		break;
 	case 5:	//Asphalt
 		lastTerrain = 1;
 		canJump = true;
 		if (activeFriction)
-			ChangeFriction(5000.0f);
+		{
+			if (!drifting)
+			{
+				ChangeFriction(5000.0f);
+			}
+		}
+			
 		break;
 	case 6: // 2nd checkpoint
 		LOG("2nd checkpoint.");

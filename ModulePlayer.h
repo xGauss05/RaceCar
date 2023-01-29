@@ -26,6 +26,8 @@ public:
 	void Respawn();
 	void IncreaseLap();
 	void ChangeFriction(float friction);
+	void StartDrift();
+	void EndDrift();
 	
 public:
 
@@ -43,6 +45,7 @@ public:
 	bool activeImpulse = true;
 	bool activeFriction = true;
 	bool canJump = true;
+	bool drifting = false;
 	bool playTurboFx = false;
 	bool playJumpFx = false;
 	bool firstcPoint, secondcPoint, thirdcPoint, fourthcPoint, fifthcPoint;
