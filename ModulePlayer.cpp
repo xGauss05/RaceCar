@@ -112,7 +112,8 @@ bool ModulePlayer::Start()
 	App->physics->AddConstraintP2P(*vehicle, *vehicleSensorBody, { 0, 0, 0 }, { 0, 0, 0 });
 
 	timer = 60;
-	firstcPoint = false;
+	canJump = true;
+	firstcPoint = secondcPoint = false;
 	return true;
 }
 
@@ -222,15 +223,17 @@ update_status ModulePlayer::Update(float dt)
 
 void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2) 
 {
-	LOG("OnCollision vehicle");
+	//LOG("OnCollision vehicle");
 	
 	switch (body2->id) {
 	case 2: //Death field
+		LOG("Deathfield collision");
 		ResetGame();
 		break;
-	case 3: //Checkpoint
+	case 3: // 1st checkpoint
 		LOG("1st checkpoint.");
-		if (!firstcPoint) {
+		if (!firstcPoint) 
+		{
 			//App->audio->PlayFx(checkpointFx);
 			timer += 10.0f;
 			body2->SetPos(0, 100, 0); // we need to do it better
@@ -243,6 +246,15 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	case 5:	//Asphalt
 		ChangeFriction(5000.0f);
 		break;
+	case 6: // 2nd checkpoint
+		LOG("2nd checkpoint.");
+		if (!secondcPoint) 
+		{
+			//App->audio->PlayFx(checkpointFx);
+			timer += 10.0f;
+			body2->SetPos(0, 100, 0); // we need to do it better
+			secondcPoint = true;
+		}
 	default: break;
 	}
 }

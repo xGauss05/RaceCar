@@ -18,7 +18,7 @@ void Circuit::Start() {
 	sandTerrain.color.Set(1, 0.945f, 0.686f);
 	sandTerrainBody = App->physics->AddBody(sandTerrain, 0);
 	sandTerrainBody->id = 4;
-	
+
 
 	sandPath.SetPos(0, 1, 0);
 	sandPath.size.Set(125, 0.9f, 175);
@@ -35,7 +35,7 @@ void Circuit::Start() {
 	goalTopPart.SetPos(0, 7, 0);
 	goalTopPart.size.Set(10, 2, 0.1f);
 	goalTopPart.color.Set(1, 0, 0);
-	
+
 	// left stairs
 	{
 		Color color;
@@ -182,35 +182,45 @@ void Circuit::Start() {
 		corridorBody12->id = 5;
 
 	}
-	
+
 
 
 	// sensors
 	{
 		bottomSensor.SetPos(0, -10, 0);
 		bottomSensor.size.Set(1000, 2, 1000);
-		bottomSensor.color.Set(0.8f, 0.3f, 0.2f);
+		bottomSensor.color.Set(0.8f, 0.3f, 0.2f, 0.1f);
 		bottomSensorBody = App->physics->AddBody(bottomSensor, 0);
 		bottomSensorBody->SetAsSensor(true);
 		bottomSensorBody->collision_listeners.add(App->scene_intro);
-		bottomSensorBody->id = 2; 
+		bottomSensorBody->id = 2;
 
 		cpoint1Sensor.SetPos(0, 7, 100);
-		cpoint1Sensor.size.Set(30, 15, 3);
-		cpoint1Sensor.color.Set(0.8f, 0.3f, 0.2f);
+		cpoint1Sensor.size.Set(30, 10, 3);
+		cpoint1Sensor.color.Set(0.8f, 0.3f, 0.2f, 0.1f);
 		cpoint1SensorBody = App->physics->AddBody(cpoint1Sensor, 0);
 		cpoint1SensorBody->SetAsSensor(true);
 		cpoint1SensorBody->id = 3;
+
+		cpoint2Sensor.SetPos(120, 40, 100);
+		cpoint2Sensor.size.Set(30, 10, 3);
+		cpoint2Sensor.color.Set(0.8f, 0.3f, 0.2f, 0.1f);
+		cpoint2SensorBody = App->physics->AddBody(cpoint2Sensor, 0);
+		cpoint2SensorBody->SetAsSensor(true);
+		cpoint2SensorBody->id = 6;
 	}
 }
 
 void Circuit::Render() {
-	
+
 	bottomSensorBody->GetTransform(bottomSensor.transform.M);
 	bottomSensor.Render();
 
 	cpoint1SensorBody->GetTransform(cpoint1Sensor.transform.M);
 	cpoint1Sensor.Render();
+
+	cpoint2SensorBody->GetTransform(cpoint2Sensor.transform.M);
+	cpoint2Sensor.Render();
 
 	// for mobile objects
 	obstacleBody->GetTransform(obstacle.transform.M);
@@ -236,7 +246,7 @@ void Circuit::Render() {
 		stairs4.Render();
 
 		stairs5.Render();
-		
+
 		stairs6.Render();
 
 		stairs7.Render();
@@ -313,7 +323,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	/*Plane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();*/
-	
+
 	if (!App->camera->cameraDebug) {
 		vec3 newPosCamera = App->player->vehicle->GetPosition();
 
