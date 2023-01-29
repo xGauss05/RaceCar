@@ -342,19 +342,19 @@ void Circuit::Start() {
 		color.Set(0.545f, 0.443f, 0.361f);
 
 		desertBall1.SetPos(15, 3, 10);
-		desertBall1.radius = 1;
+		desertBall1.radius = 2;
 		desertBall1.color = color;
 		desertBallBody1 = App->physics->AddBody(desertBall1, 1);
 		desertBallBody1->id = 5;
 
 		desertBall2.SetPos(-15, 3, 14);
-		desertBall2.radius = 1;
+		desertBall2.radius = 2;
 		desertBall2.color = color;
 		desertBallBody2 = App->physics->AddBody(desertBall2, 1);
 		desertBallBody2->id = 5;
 
 		desertBall3.SetPos(11, 3, -29);
-		desertBall3.radius = 1;
+		desertBall3.radius = 2;
 		desertBall3.color = color;
 		desertBallBody3 = App->physics->AddBody(desertBall3, 1);
 		desertBallBody3->id = 5;
@@ -365,7 +365,7 @@ void Circuit::Start() {
 
 void Circuit::Render() {
 
-	App->renderer3D->DrawTexture(textureTest, { 0,10,0 }, 5, false);
+	App->renderer3D->DrawTexture(textureTest, { -500,-8,-500 }, 1000, false);
 
 	bottomSensorBody->GetTransform(bottomSensor.transform.M);
 	bottomSensor.Render();

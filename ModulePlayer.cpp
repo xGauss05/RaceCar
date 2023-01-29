@@ -28,7 +28,7 @@ bool ModulePlayer::Start()
 
 	VehicleInfo car;
 	// Car properties ----------------------------------------
-	car.chassis_size.Set(3, 1, 4);
+	car.chassis_size.Set(4, 1, 5);
 	car.chassis_offset.Set(0, 1, 0);
 	car.mass = 500.0f;
 	car.suspensionStiffness = 10.0f;
@@ -310,7 +310,7 @@ update_status ModulePlayer::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 	{
 		if (activeImpulse)
-			turbo = 3500;
+			turbo = 4000;
 	}
 
 	if (turbo > 0)
