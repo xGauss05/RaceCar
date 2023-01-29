@@ -360,12 +360,18 @@ void Circuit::Start() {
 		desertBallBody3->id = 5;
 	}
 
-	textureTest = App->renderer3D->LoadTexture("Assets/Textures/elmo.jpg");
+	elmoTexture = App->renderer3D->LoadTexture("Assets/Textures/elmo.jpg");
+	door1Texture = App->renderer3D->LoadTexture("Assets/Textures/open_door1.jpg");
+	door2Texture = App->renderer3D->LoadTexture("Assets/Textures/open_door2.jpg");
+	thisIsFine = App->renderer3D->LoadTexture("Assets/Textures/this_is_fine.jpg");
 }
 
 void Circuit::Render() {
 
-	App->renderer3D->DrawTexture(textureTest, { -500,-8,-500 }, 1000, false);
+	App->renderer3D->DrawTexture(elmoTexture, { -500,-8,-500 }, -1000, false);
+	App->renderer3D->DrawTexture(door1Texture, { 60, 42, -213 }, 10, true);
+	App->renderer3D->DrawTexture(door2Texture, { 0,10,10 }, 10, true);
+	App->renderer3D->DrawTexture(thisIsFine, { -10,10,10 }, 10, true, 90.0f);
 
 	bottomSensorBody->GetTransform(bottomSensor.transform.M);
 	bottomSensor.Render();

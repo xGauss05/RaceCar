@@ -184,7 +184,10 @@ struct Circuit {
 	Sphere desertBall3;
 	PhysBody3D* desertBallBody3;
 
-	int textureTest;
+	int elmoTexture;
+	int door1Texture;
+	int door2Texture;
+	int thisIsFine;
 };
 
 class ModuleSceneIntro : public Module

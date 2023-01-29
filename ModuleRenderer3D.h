@@ -21,7 +21,7 @@ public:
 
 	int LoadTexture(const char* path);
 
-	void DrawTexture(uint texture, vec3 pos, float size, bool orientationY = true);
+	void DrawTexture(uint texture, vec3 pos, float size, bool orientationY = true, float rotation = 0.0f);
 
 public:
 
