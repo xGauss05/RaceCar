@@ -134,8 +134,8 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 void ModulePlayer::ResetGame() 
 {
-	mat4x4 baseTranform;
-	vehicle->SetTransform(baseTranform.M);
+	mat4x4 baseTransform;
+	vehicle->SetTransform(baseTransform.M);
 	vehicle->SetAngularVelocity(0, 0, 0);
 	vehicle->SetLinearVelocity(0, 0, 0);
 	vehicle->SetPos(0, 5, 0);
@@ -146,8 +146,7 @@ void ModulePlayer::ResetGame()
 
 void ModulePlayer::Respawn() 
 {
-	mat4x4 baseTranform;
-	vehicle->SetTransform(baseTranform.M);
+	vehicle->SetTransform(respawnTransform.M);
 	vehicle->SetAngularVelocity(0, 0, 0);
 	vehicle->SetLinearVelocity(0, 0, 0);
 	vehicle->SetPos(respawnPosition.x, respawnPosition.y, respawnPosition.z);
@@ -370,6 +369,18 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		if (!firstcPoint) 
 		{
 			App->audio->PlayFx(checkpointFx);
+			respawnTransform[0] = 1;
+			respawnTransform[1] = 0;
+			respawnTransform[2] = 0;
+
+			respawnTransform[4] = 0;
+			respawnTransform[5] = 1;
+			respawnTransform[6] = 0;
+
+			respawnTransform[8] = 0;
+			respawnTransform[9] = 0;
+			respawnTransform[10] = 1;
+
 			respawnPosition = body2->GetPosition();
 			timer += BONUS_TIME;
 			firstcPoint = true;
@@ -392,6 +403,17 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		if (!secondcPoint && firstcPoint) 
 		{
 			App->audio->PlayFx(checkpointFx);
+			respawnTransform[0] = -1;
+			respawnTransform[1] = 0;
+			respawnTransform[2] = 0;
+
+			respawnTransform[4] = 0;
+			respawnTransform[5] = 1;
+			respawnTransform[6] = 0;
+
+			respawnTransform[8] = 0;
+			respawnTransform[9] = 0;
+			respawnTransform[10] = -1;
 			respawnPosition = body2->GetPosition();
 			timer += BONUS_TIME;
 			secondcPoint = true;
@@ -402,6 +424,17 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		if (!thirdcPoint && secondcPoint && firstcPoint)
 		{
 			App->audio->PlayFx(checkpointFx);
+			respawnTransform[0] = -1;
+			respawnTransform[1] = 0;
+			respawnTransform[2] = 0;
+
+			respawnTransform[4] = 0;
+			respawnTransform[5] = 1;
+			respawnTransform[6] = 0;
+
+			respawnTransform[8] = 0;
+			respawnTransform[9] = 0;
+			respawnTransform[10] = -1;
 			respawnPosition = body2->GetPosition();
 			timer += BONUS_TIME;
 			thirdcPoint = true;
@@ -412,6 +445,17 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		if (!fourthcPoint && thirdcPoint && secondcPoint && firstcPoint)
 		{
 			App->audio->PlayFx(checkpointFx);
+			respawnTransform[0] = -1;
+			respawnTransform[1] = 0;
+			respawnTransform[2] = 0;
+
+			respawnTransform[4] = 0;
+			respawnTransform[5] = 1;
+			respawnTransform[6] = 0;
+
+			respawnTransform[8] = 0;
+			respawnTransform[9] = 0;
+			respawnTransform[10] = -1;
 			respawnPosition = body2->GetPosition();
 			timer += BONUS_TIME;
 			fourthcPoint = true;
@@ -423,6 +467,17 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 			firstcPoint)
 		{
 			App->audio->PlayFx(checkpointFx);
+			respawnTransform[0] = 1;
+			respawnTransform[1] = 0;
+			respawnTransform[2] = 0;
+
+			respawnTransform[4] = 0;
+			respawnTransform[5] = 1;
+			respawnTransform[6] = 0;
+
+			respawnTransform[8] = 0;
+			respawnTransform[9] = 0;
+			respawnTransform[10] = 1;
 			respawnPosition = body2->GetPosition();
 			timer += BONUS_TIME;
 			fifthcPoint = true;
@@ -432,6 +487,17 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		if (fifthcPoint && fourthcPoint && thirdcPoint && secondcPoint &&
 			firstcPoint)
 		{
+			respawnTransform[0] = 1;
+			respawnTransform[1] = 0;
+			respawnTransform[2] = 0;
+
+			respawnTransform[4] = 0;
+			respawnTransform[5] = 1;
+			respawnTransform[6] = 0;
+
+			respawnTransform[8] = 0;
+			respawnTransform[9] = 0;
+			respawnTransform[10] = 1;
 			respawnPosition = body2->GetPosition();
 			LOG("Goal checkpoint");
 			IncreaseLap();
