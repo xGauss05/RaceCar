@@ -155,6 +155,32 @@ void Circuit::Start() {
 		corridorBody8 = App->physics->AddBody(corridor8, 0);
 		corridorBody8->id = 5;
 
+
+		corridor9.SetPos(60, 35, -198);
+		corridor9.size.Set(30, 2, 30);
+		corridor9.color = color;
+		corridorBody9 = App->physics->AddBody(corridor9, 0);
+		corridorBody9->id = 5;
+
+		corridor10.SetPos(30, 35, -198);
+		corridor10.size.Set(30, 2, 30);
+		corridor10.color = color;
+		corridorBody10 = App->physics->AddBody(corridor10, 0);
+		corridorBody10->id = 5;
+
+		corridor11.SetPos(15, 35, -183);
+		corridor11.size.Set(42.426f, 2, 42.426f);
+		corridor11.SetRotation(45, { 0, 1, 0 });
+		corridor11.color = color;
+		corridorBody11 = App->physics->AddBody(corridor11, 0);
+		corridorBody11->id = 5;
+
+		corridor12.SetPos(0, 35, -168);
+		corridor12.size.Set(30, 2, 30);
+		corridor12.color = color;
+		corridorBody12 = App->physics->AddBody(corridor12, 0);
+		corridorBody12->id = 5;
+
 	}
 	
 
@@ -237,6 +263,14 @@ void Circuit::Render() {
 		corridor7.Render();
 
 		corridor8.Render();
+
+		corridor9.Render();
+
+		corridor10.Render();
+
+		corridor11.Render();
+
+		corridor12.Render();
 	}
 }
 
