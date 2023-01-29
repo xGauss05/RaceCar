@@ -267,7 +267,7 @@ void Circuit::Start() {
 		color.Set(1, 1, 1);
 
 		vec3 position;
-		position = { 0, 8, 20 };
+		position = { 60, 42, -183 };
 
 		column1Left.SetPos(position.x, position.y, position.z);
 		column1Left.size.Set(0.1f, 10, 0.1f);
@@ -277,13 +277,30 @@ void Circuit::Start() {
 		columnBody1Left->id = 5;
 
 		door1Left.SetPos(position.x, position.y, position.z - 5);
-		door1Left.size.Set(1, 10, 10);
+		door1Left.size.Set(1, 10, 14);
 		door1Left.color = color;
 		doorBody1Left = App->physics->AddBody(door1Left, 100);
 		doorBody1Left->id = 5;
 		
-		App->physics->AddConstraintHinge(*doorBody1Left, *columnBody1Left, { 0, 0, 5 }, { 0, 0, 0 }, { 0, 1, 0 }, { 0, 1, 0 });
+		App->physics->AddConstraintHinge(*doorBody1Left, *columnBody1Left, { 0, 0, 7 }, { 0, 0, 0 }, { 0, 1, 0 }, { 0, 1, 0 });
 
+
+		position = { 60, 42, -213 };
+
+		column1Right.SetPos(position.x, position.y, position.z);
+		column1Right.size.Set(0.1f, 10, 0.1f);
+		column1Right.color = color;
+		columnBody1Right = App->physics->AddBody(column1Right, 0);
+		columnBody1Right->SetAsSensor(true);
+		columnBody1Right->id = 5;
+
+		door1Right.SetPos(position.x, position.y, position.z + 5);
+		door1Right.size.Set(1, 10, 14);
+		door1Right.color = color;
+		doorBody1Right = App->physics->AddBody(door1Right, 100);
+		doorBody1Right->id = 5;
+
+		App->physics->AddConstraintHinge(*doorBody1Right, *columnBody1Right, { 0, 0, -7 }, { 0, 0, 0 }, { 0, 1, 0 }, { 0, 1, 0 });
 
 	}
 
@@ -443,7 +460,9 @@ void Circuit::Render() {
 		door1Left.Render();
 		column1Left.Render();
 
-
+		doorBody1Right->GetTransform(door1Right.transform.M);
+		door1Right.Render();
+		column1Right.Render();
 	}
 
 	// cacti
