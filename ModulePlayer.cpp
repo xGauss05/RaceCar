@@ -244,7 +244,7 @@ update_status ModulePlayer::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && canJump)
 	{
 		canJump = false;
-		if (activeImpulse) vehicle->Push(0, 5000, 0);
+		if (activeImpulse) vehicle->Push(0, 3000, 0);
 		
 		if (!playJumpFx)
 		{
@@ -297,7 +297,7 @@ update_status ModulePlayer::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) 
 	{
 		if (activeImpulse)
-			turbo = 500;
+			turbo = 1200;
 		
 	}
 
