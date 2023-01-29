@@ -48,6 +48,8 @@ public:
 	bool firstcPoint, secondcPoint, thirdcPoint, fourthcPoint, fifthcPoint;
 	uint laps;
 	vec3 respawnPosition;
+	mat4x4 respawnTransform;
+
 private:
 	int checkpointFx, turboFx, honkFx, jumpFx;
 	
