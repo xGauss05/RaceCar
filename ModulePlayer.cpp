@@ -119,6 +119,7 @@ bool ModulePlayer::Start()
 	canJump = true;
 	laps = 0;
 	firstcPoint = secondcPoint = thirdcPoint = fourthcPoint = fifthcPoint = false;
+	respawnPosition = { 0,0,0 };
 	return true;
 }
 
@@ -141,6 +142,15 @@ void ModulePlayer::ResetGame()
 	timer = 60;
 	laps = 0;
 	firstcPoint = secondcPoint = thirdcPoint = fourthcPoint = fifthcPoint = false;
+}
+
+void ModulePlayer::Respawn() 
+{
+	mat4x4 baseTranform;
+	vehicle->SetTransform(baseTranform.M);
+	vehicle->SetAngularVelocity(0, 0, 0);
+	vehicle->SetLinearVelocity(0, 0, 0);
+	vehicle->SetPos(respawnPosition.x, respawnPosition.y, respawnPosition.z);
 }
 
 void ModulePlayer::IncreaseLap() 
@@ -170,9 +180,11 @@ update_status ModulePlayer::Update(float dt)
 
 	if (timer <= 0) ResetGame();
 
-	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
-		ResetGame();
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) 
+	{
+		Respawn();
 	}
+
 	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) {
 		mass += 10.0f;
 		vehicle->vehicle->getRigidBody()->setMassProps(mass, vehicle->vehicle->getRigidBody()->getLocalInertia());
@@ -229,9 +241,9 @@ update_status ModulePlayer::Update(float dt)
 		vehicle->SetGravity(0, 0, 0);
 	}
 
-
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && canJump)
 	{
+		canJump = false;
 		if (activeImpulse) vehicle->Push(0, 5000, 0);
 		
 		if (!playJumpFx)
@@ -252,7 +264,8 @@ update_status ModulePlayer::Update(float dt)
 	}
 
 	float turbo = 0;
-	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
+	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) 
+	{
 		if (activeImpulse)
 			turbo = 500;
 		
@@ -296,8 +309,6 @@ update_status ModulePlayer::Update(float dt)
 		brake = turbo;
 	}
 
-	
-
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
@@ -322,24 +333,27 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	switch (body2->id) {
 	case 2: // Death field
 		LOG("Deathfield collision");
-		ResetGame();
+		Respawn();
 		break;
 	case 3: // 1st checkpoint
 		LOG("1st checkpoint.");
 		if (!firstcPoint) 
 		{
 			//App->audio->PlayFx(checkpointFx);
+			respawnPosition = body2->GetPosition();
 			timer += BONUS_TIME;
 			firstcPoint = true;
 		}
 		break;
 	case 4:	//Sand
 		lastTerrain = 0;
+		canJump = true;
 		if (activeFriction)
 			ChangeFriction(2.0f);
 		break;
 	case 5:	//Asphalt
 		lastTerrain = 1;
+		canJump = true;
 		if (activeFriction)
 			ChangeFriction(5000.0f);
 		break;
@@ -348,6 +362,7 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		if (!secondcPoint && firstcPoint) 
 		{
 			//App->audio->PlayFx(checkpointFx);
+			respawnPosition = body2->GetPosition();
 			timer += BONUS_TIME;
 			secondcPoint = true;
 		}
@@ -357,6 +372,7 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		if (!thirdcPoint && secondcPoint && firstcPoint)
 		{
 			//App->audio->PlayFx(checkpointFx);
+			respawnPosition = body2->GetPosition();
 			timer += BONUS_TIME;
 			thirdcPoint = true;
 		}
@@ -366,6 +382,7 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		if (!fourthcPoint && thirdcPoint && secondcPoint && firstcPoint)
 		{
 			//App->audio->PlayFx(checkpointFx);
+			respawnPosition = body2->GetPosition();
 			timer += BONUS_TIME;
 			fourthcPoint = true;
 		}
@@ -376,6 +393,7 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 			firstcPoint)
 		{
 			//App->audio->PlayFx(checkpointFx);
+			respawnPosition = body2->GetPosition();
 			timer += BONUS_TIME;
 			fifthcPoint = true;
 		}
@@ -384,6 +402,7 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		if (fifthcPoint && fourthcPoint && thirdcPoint && secondcPoint &&
 			firstcPoint)
 		{
+			respawnPosition = body2->GetPosition();
 			LOG("Goal checkpoint");
 			IncreaseLap();
 		}

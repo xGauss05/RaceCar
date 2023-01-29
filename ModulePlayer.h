@@ -23,6 +23,7 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	bool CleanUp();
 	void ResetGame();
+	void Respawn();
 	void IncreaseLap();
 	void ChangeFriction(float friction);
 	
@@ -41,11 +42,12 @@ public:
 	bool activeGravity = true;
 	bool activeImpulse = true;
 	bool activeFriction = true;
-	bool canJump;
+	bool canJump = true;
 	bool playTurboFx = false;
 	bool playJumpFx = false;
 	bool firstcPoint, secondcPoint, thirdcPoint, fourthcPoint, fifthcPoint;
 	uint laps;
+	vec3 respawnPosition;
 private:
 	int checkpointFx, turboFx, honkFx, jumpFx;
 	
