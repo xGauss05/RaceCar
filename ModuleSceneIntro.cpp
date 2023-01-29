@@ -110,12 +110,12 @@ void Circuit::Start() {
 		corridorBody1 = App->physics->AddBody(corridor1, 0);
 		corridorBody1->id = 5;
 
-		corridor2.SetPos(120, 35, 83);
+		/*corridor2.SetPos(120, 35, 83);
 		corridor2.size.Set(30, 4, 5);
 		corridor2.SetRotation(30, { 1, 0, 0 });
 		corridor2.color = color;
 		corridorBody2 = App->physics->AddBody(corridor2, 0);
-		corridorBody2->id = 5;
+		corridorBody2->id = 5;*/
 
 		corridor3.SetPos(120, 35, 0);
 		corridor3.size.Set(30, 2, 70);
@@ -123,12 +123,12 @@ void Circuit::Start() {
 		corridorBody3 = App->physics->AddBody(corridor3, 0);
 		corridorBody3->id = 5;
 
-		corridor4.SetPos(120, 35, -35);
+		/*corridor4.SetPos(120, 35, -35);
 		corridor4.size.Set(30, 4, 5);
 		corridor4.SetRotation(30, { 1, 0, 0 });
 		corridor4.color = color;
 		corridorBody4 = App->physics->AddBody(corridor4, 0);
-		corridorBody4->id = 5;
+		corridorBody4->id = 5;*/
 
 		corridor5.SetPos(120, 35, -118);
 		corridor5.size.Set(30, 2, 70);
@@ -370,11 +370,11 @@ void Circuit::Render() {
 	{
 		corridor1.Render();
 
-		corridor2.Render();
+		//corridor2.Render();
 
 		corridor3.Render();
 
-		corridor4.Render();
+		//corridor4.Render();
 
 		corridor5.Render();
 

@@ -85,14 +85,14 @@ struct Circuit {
 	Cube corridor1;
 	PhysBody3D* corridorBody1;
 
-	Cube corridor2;
-	PhysBody3D* corridorBody2;
+	/*Cube corridor2;
+	PhysBody3D* corridorBody2;*/
 
 	Cube corridor3;
 	PhysBody3D* corridorBody3;
 
-	Cube corridor4;
-	PhysBody3D* corridorBody4;
+	/*Cube corridor4;
+	PhysBody3D* corridorBody4;*/
 
 	Cube corridor5;
 	PhysBody3D* corridorBody5;
