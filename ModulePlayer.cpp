@@ -429,11 +429,12 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		}
 		break;
 	case 10:
+		LOG("Goal checkpoint");
 		if (fifthcPoint && fourthcPoint && thirdcPoint && secondcPoint &&
 			firstcPoint)
 		{
 			respawnPosition = body2->GetPosition();
-			LOG("Goal checkpoint");
+			timer += BONUS_TIME;
 			IncreaseLap();
 		}
 		break;

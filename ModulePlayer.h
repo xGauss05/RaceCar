@@ -9,7 +9,7 @@ struct PhysVehicle3D;
 #define MAX_ACCELERATION 1000.0f
 #define TURN_DEGREES 15.0f * DEGTORAD
 #define BRAKE_POWER 2.0f
-#define BONUS_TIME 5.0f
+#define BONUS_TIME 10.0f
 #define MAX_LAPS 3
 
 class ModulePlayer : public Module
