@@ -273,7 +273,7 @@ update_status ModulePlayer::Update(float dt)
 
 	vehicle->Render();
 
-	char title[80];
+	char title[120];
 	sprintf_s(title, "Sandy Shores Circuit | %.1f Km/h | Time: %.f s | Lap: %d / 3", vehicle->GetKmh(), timer, laps);
 	
 	if (laps >= MAX_LAPS)
@@ -350,8 +350,12 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		}
 		break;
 	case 10:
-		LOG("Goal checkpoint");
-		IncreaseLap();
+		if (fifthcPoint && fourthcPoint && thirdcPoint && secondcPoint &&
+			firstcPoint)
+		{
+			LOG("Goal checkpoint");
+			IncreaseLap();
+		}
 		break;
 	default: break;
 	}
