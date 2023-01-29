@@ -123,6 +123,7 @@ bool ModulePlayer::Start()
 	laps = 0;
 	firstcPoint = secondcPoint = thirdcPoint = fourthcPoint = fifthcPoint = false;
 	respawnPosition = { 0,0,0 };
+	
 	return true;
 }
 
@@ -144,6 +145,7 @@ void ModulePlayer::ResetGame()
 	vehicle->SetPos(0, 5, 0);
 	timer = 60;
 	laps = 0;
+	
 	firstcPoint = secondcPoint = thirdcPoint = fourthcPoint = fifthcPoint = false;
 }
 
@@ -342,6 +344,10 @@ update_status ModulePlayer::Update(float dt)
 		brake = turbo;
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) 
+	{
+		ResetGame();
+	}
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
@@ -349,11 +355,11 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Render();
 
 	char title[120];
-	sprintf_s(title, "Sandy Shores Circuit | %.1f Km/h | Time: %.f s | Lap: %d / 3", vehicle->GetKmh(), timer, laps);
+	sprintf_s(title, "Sandy Shores Circuit | %.1f Km/h | Time: %.f s | Lap: %d / %d", vehicle->GetKmh(), timer, laps, MAX_LAPS);
 
 	if (laps >= MAX_LAPS)
 	{
-		sprintf_s(title, "Sandy Shores Circuit | %.1f Km/h | Time: %.f s | Lap: %d / %d | Con fucking gratulations.", vehicle->GetKmh(), timer, laps, MAX_LAPS);
+		sprintf_s(title, "Sandy Shores Circuit | %.1f Km/h | Time: %.f s | Lap: %d / %d | YOU WON! Press RETURN to Reset", vehicle->GetKmh(), timer, laps, MAX_LAPS);
 	}
 	App->window->SetTitle(title);
 	return UPDATE_CONTINUE;
@@ -495,6 +501,7 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 			if (laps >= MAX_LAPS) 
 			{
 				App->audio->PlayFx(winFx);
+				
 			}
 			else 
 			{
