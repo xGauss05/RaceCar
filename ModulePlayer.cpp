@@ -40,8 +40,8 @@ bool ModulePlayer::Start()
 	mass = car.mass;
 	// Wheel properties ---------------------------------------
 	float connection_height = 1.2f;
-	float wheel_radius = 0.6f;
-	float wheel_width = 0.5f;
+	float wheel_radius = 1.3f;
+	float wheel_width = 1.5f;
 	float suspensionRestLength = 1.2f;
 
 	// Don't change anything below this line ------------------
@@ -56,7 +56,7 @@ bool ModulePlayer::Start()
 	car.wheels = new Wheel[4];
 
 	// FRONT-LEFT ------------------------
-	car.wheels[0].connection.Set(half_width - 0.3f * wheel_width, connection_height, half_length - wheel_radius);
+	car.wheels[0].connection.Set(half_width - 0.1f * wheel_width, connection_height, half_length - wheel_radius*0.5f);
 	car.wheels[0].direction = direction;
 	car.wheels[0].axis = axis;
 	car.wheels[0].suspensionRestLength = suspensionRestLength;
@@ -68,7 +68,7 @@ bool ModulePlayer::Start()
 	car.wheels[0].steering = true;
 
 	// FRONT-RIGHT ------------------------
-	car.wheels[1].connection.Set(-half_width + 0.3f * wheel_width, connection_height, half_length - wheel_radius);
+	car.wheels[1].connection.Set(-half_width + 0.1f * wheel_width, connection_height, half_length - wheel_radius*0.5f);
 	car.wheels[1].direction = direction;
 	car.wheels[1].axis = axis;
 	car.wheels[1].suspensionRestLength = suspensionRestLength;
@@ -80,7 +80,7 @@ bool ModulePlayer::Start()
 	car.wheels[1].steering = true;
 
 	// REAR-LEFT ------------------------
-	car.wheels[2].connection.Set(half_width - 0.3f * wheel_width, connection_height, -half_length + wheel_radius);
+	car.wheels[2].connection.Set(half_width - 0.1f * wheel_width, connection_height, -half_length + wheel_radius*0.5f);
 	car.wheels[2].direction = direction;
 	car.wheels[2].axis = axis;
 	car.wheels[2].suspensionRestLength = suspensionRestLength;
@@ -92,7 +92,7 @@ bool ModulePlayer::Start()
 	car.wheels[2].steering = false;
 
 	// REAR-RIGHT ------------------------
-	car.wheels[3].connection.Set(-half_width + 0.3f * wheel_width, connection_height, -half_length + wheel_radius);
+	car.wheels[3].connection.Set(-half_width + 0.1f * wheel_width, connection_height, -half_length + wheel_radius* 0.5f);
 	car.wheels[3].direction = direction;
 	car.wheels[3].axis = axis;
 	car.wheels[3].suspensionRestLength = suspensionRestLength;
@@ -123,6 +123,7 @@ bool ModulePlayer::Start()
 	laps = 0;
 	firstcPoint = secondcPoint = thirdcPoint = fourthcPoint = fifthcPoint = false;
 	respawnPosition = { 0,0,0 };
+	
 	return true;
 }
 
@@ -144,6 +145,7 @@ void ModulePlayer::ResetGame()
 	vehicle->SetPos(0, 5, 0);
 	timer = 60;
 	laps = 0;
+	
 	firstcPoint = secondcPoint = thirdcPoint = fourthcPoint = fifthcPoint = false;
 }
 
@@ -364,6 +366,10 @@ update_status ModulePlayer::Update(float dt)
 		brake = turbo;
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) 
+	{
+		ResetGame();
+	}
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
@@ -371,11 +377,11 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Render();
 
 	char title[120];
-	sprintf_s(title, "Sandy Shores Circuit | %.1f Km/h | Time: %.f s | Lap: %d / 3", vehicle->GetKmh(), timer, laps);
+	sprintf_s(title, "Sandy Shores Circuit | %.1f Km/h | Time: %.f s | Lap: %d / %d", vehicle->GetKmh(), timer, laps, MAX_LAPS);
 
 	if (laps >= MAX_LAPS)
 	{
-		sprintf_s(title, "Sandy Shores Circuit | %.1f Km/h | Time: %.f s | Lap: %d / %d | Con fucking gratulations.", vehicle->GetKmh(), timer, laps, MAX_LAPS);
+		sprintf_s(title, "Sandy Shores Circuit | %.1f Km/h | Time: %.f s | Lap: %d / %d | YOU WON! Press RETURN to Reset", vehicle->GetKmh(), timer, laps, MAX_LAPS);
 	}
 	App->window->SetTitle(title);
 	return UPDATE_CONTINUE;
@@ -529,6 +535,7 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 			if (laps >= MAX_LAPS) 
 			{
 				App->audio->PlayFx(winFx);
+				
 			}
 			else 
 			{

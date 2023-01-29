@@ -41,9 +41,6 @@ struct Circuit {
 	Cube cpointGoalSensor;
 	PhysBody3D* cpointGoalSensorBody;
 
-	Cube obstacle;
-	PhysBody3D* obstacleBody;
-
 	// goal
 	Cube columnGoalLeft;
 	Cube columnGoalRight;
@@ -177,6 +174,15 @@ struct Circuit {
 
 	Cube cactus5;
 	PhysBody3D* cactusBody5;
+
+	Sphere desertBall1;
+	PhysBody3D* desertBallBody1;
+
+	Sphere desertBall2;
+	PhysBody3D* desertBallBody2;
+
+	Sphere desertBall3;
+	PhysBody3D* desertBallBody3;
 
 	int textureTest;
 };

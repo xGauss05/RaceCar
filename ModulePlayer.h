@@ -49,6 +49,7 @@ public:
 	bool playTurboFx = false;
 	bool playJumpFx = false;
 	bool firstcPoint, secondcPoint, thirdcPoint, fourthcPoint, fifthcPoint;
+	
 	uint laps;
 	vec3 respawnPosition;
 	mat4x4 respawnTransform;
