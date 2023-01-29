@@ -258,14 +258,32 @@ update_status ModulePlayer::Update(float dt)
 	}
 
 	// Flip
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT)
 	{
-		vehicle->SetAngularVelocity(0, 0, -2);
-	}
-	
-	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT)
-	{
-		vehicle->SetAngularVelocity(0, 0, 2);
+		float flip = 0;
+		bool isFlipping = false;
+		mat4x4 transformVehicle;
+		vec3 direction;
+		vehicle->GetTransform(transformVehicle.M);
+		direction.x = transformVehicle.M[8];
+		direction.y = transformVehicle.M[9];
+		direction.z = transformVehicle.M[10];
+
+		if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT)
+		{
+			flip -= 2;
+			isFlipping = true;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT)
+		{
+			flip += 2;
+			isFlipping = true;
+		}
+
+		if (isFlipping) {
+			direction = direction * flip;
+			vehicle->SetAngularVelocity(direction.x, direction.y, direction.z);
+		}
 	}
 
 
