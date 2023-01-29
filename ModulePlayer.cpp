@@ -173,9 +173,10 @@ update_status ModulePlayer::Update(float dt)
 		vehicle->vehicle->getRigidBody()->setMassProps(mass, vehicle->vehicle->getRigidBody()->getLocalInertia());
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		vehicle->Push(0, 30, 0);
+		float jump = 200 * dt * 1000;
+		vehicle->Push(0, jump, 0);
 	}
 
 	float turbo = 0;

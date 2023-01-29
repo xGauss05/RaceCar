@@ -103,6 +103,9 @@ struct Circuit {
 	Cube corridor12;
 	PhysBody3D* corridorBody12;
 
+	Cube corridor13;
+	PhysBody3D* corridorBody13;
+
 	// path
 	Cube sandPath;
 

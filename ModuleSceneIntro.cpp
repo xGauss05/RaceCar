@@ -181,6 +181,12 @@ void Circuit::Start() {
 		corridorBody12 = App->physics->AddBody(corridor12, 0);
 		corridorBody12->id = 5;
 
+		corridor13.SetPos(0, 35, -118);
+		corridor13.size.Set(30, 2, 70);
+		corridor13.color = color;
+		corridorBody13 = App->physics->AddBody(corridor13, 0);
+		corridorBody13->id = 5;
+
 	}
 
 
@@ -281,6 +287,8 @@ void Circuit::Render() {
 		corridor11.Render();
 
 		corridor12.Render();
+
+		corridor13.Render();
 	}
 }
 
