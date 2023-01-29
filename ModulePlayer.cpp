@@ -108,6 +108,7 @@ bool ModulePlayer::Start()
 	
 	vehicle->collision_listeners.add(this);
 	
+	timer = 60;
 	return true;
 }
 
@@ -127,6 +128,7 @@ void ModulePlayer::ResetGame()
 	vehicle->SetAngularVelocity(0, 0, 0);
 	vehicle->SetLinearVelocity(0, 0, 0);
 	vehicle->SetPos(0, 5, 0);
+	timer = 60;
 }
 
 update_status ModulePlayer::Update(float dt)
@@ -137,6 +139,9 @@ update_status ModulePlayer::Update(float dt)
 	vehicleSensorBody->SetTransform(vehicleSensor.transform.M);
 	
 	vehicleSensor.Render();
+	if (timer >= 0) timer -= dt;
+	
+	if (timer <= 0) ResetGame();
 
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
 		ResetGame();
@@ -194,7 +199,7 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Render();
 
 	char title[80];
-	sprintf_s(title, "%.1f Km/h", vehicle->GetKmh());
+	sprintf_s(title, "Sandy Shores Circuit | %.1f Km/h | Time: %.f s", vehicle->GetKmh(), timer);
 	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;

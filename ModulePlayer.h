@@ -32,4 +32,5 @@ public:
 	float acceleration;
 	float brake;
 	float mass;
+	float timer;
 };
