@@ -369,7 +369,7 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		LOG("1st checkpoint.");
 		if (!firstcPoint) 
 		{
-			//App->audio->PlayFx(checkpointFx);
+			App->audio->PlayFx(checkpointFx);
 			respawnPosition = body2->GetPosition();
 			timer += BONUS_TIME;
 			firstcPoint = true;
@@ -391,7 +391,7 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		LOG("2nd checkpoint.");
 		if (!secondcPoint && firstcPoint) 
 		{
-			//App->audio->PlayFx(checkpointFx);
+			App->audio->PlayFx(checkpointFx);
 			respawnPosition = body2->GetPosition();
 			timer += BONUS_TIME;
 			secondcPoint = true;
@@ -401,7 +401,7 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		LOG("3rd checkpoint.");
 		if (!thirdcPoint && secondcPoint && firstcPoint)
 		{
-			//App->audio->PlayFx(checkpointFx);
+			App->audio->PlayFx(checkpointFx);
 			respawnPosition = body2->GetPosition();
 			timer += BONUS_TIME;
 			thirdcPoint = true;
@@ -411,7 +411,7 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		LOG("4th checkpoint.");
 		if (!fourthcPoint && thirdcPoint && secondcPoint && firstcPoint)
 		{
-			//App->audio->PlayFx(checkpointFx);
+			App->audio->PlayFx(checkpointFx);
 			respawnPosition = body2->GetPosition();
 			timer += BONUS_TIME;
 			fourthcPoint = true;
@@ -422,7 +422,7 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		if (!fifthcPoint && fourthcPoint && thirdcPoint && secondcPoint && 
 			firstcPoint)
 		{
-			//App->audio->PlayFx(checkpointFx);
+			App->audio->PlayFx(checkpointFx);
 			respawnPosition = body2->GetPosition();
 			timer += BONUS_TIME;
 			fifthcPoint = true;
