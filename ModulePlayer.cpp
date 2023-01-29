@@ -22,7 +22,10 @@ bool ModulePlayer::Start()
 	turboFx = App->audio->LoadFx("Assets/Audio/Sfx/turbo.wav");
 	honkFx = App->audio->LoadFx("Assets/Audio/Sfx/honk.wav");
 	jumpFx = App->audio->LoadFx("Assets/Audio/Sfx/jump.wav");
-	
+	deathFx = App->audio->LoadFx("Assets/Audio/Sfx/death.wav");
+	goalFx = App->audio->LoadFx("Assets/Audio/Sfx/goal.wav");
+	winFx = App->audio->LoadFx("Assets/Audio/Sfx/win.wav");
+
 	VehicleInfo car;
 	// Car properties ----------------------------------------
 	car.chassis_size.Set(3, 1, 4);
@@ -43,12 +46,12 @@ bool ModulePlayer::Start()
 
 	// Don't change anything below this line ------------------
 
-	float half_width = car.chassis_size.x*0.5f;
-	float half_length = car.chassis_size.z*0.5f;
-	
-	vec3 direction(0,-1,0);
-	vec3 axis(-1,0,0);
-	
+	float half_width = car.chassis_size.x * 0.5f;
+	float half_length = car.chassis_size.z * 0.5f;
+
+	vec3 direction(0, -1, 0);
+	vec3 axis(-1, 0, 0);
+
 	car.num_wheels = 4;
 	car.wheels = new Wheel[4];
 
@@ -110,9 +113,9 @@ bool ModulePlayer::Start()
 
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->SetPos(0, 5, 0);
-	
+
 	vehicle->collision_listeners.add(this);
-	
+
 	App->physics->AddConstraintP2P(*vehicle, *vehicleSensorBody, { 0, 0, 0 }, { 0, 0, 0 });
 
 	timer = 60;
@@ -132,7 +135,7 @@ bool ModulePlayer::CleanUp()
 }
 
 // Update: draw background
-void ModulePlayer::ResetGame() 
+void ModulePlayer::ResetGame()
 {
 	mat4x4 baseTransform;
 	vehicle->SetTransform(baseTransform.M);
@@ -144,15 +147,16 @@ void ModulePlayer::ResetGame()
 	firstcPoint = secondcPoint = thirdcPoint = fourthcPoint = fifthcPoint = false;
 }
 
-void ModulePlayer::Respawn() 
+void ModulePlayer::Respawn()
 {
+	App->audio->PlayFx(deathFx);
 	vehicle->SetTransform(respawnTransform.M);
 	vehicle->SetAngularVelocity(0, 0, 0);
 	vehicle->SetLinearVelocity(0, 0, 0);
 	vehicle->SetPos(respawnPosition.x, respawnPosition.y, respawnPosition.z);
 }
 
-void ModulePlayer::IncreaseLap() 
+void ModulePlayer::IncreaseLap()
 {
 	laps++;
 	firstcPoint = secondcPoint = thirdcPoint = fourthcPoint = fifthcPoint = false;
@@ -193,7 +197,7 @@ update_status ModulePlayer::Update(float dt)
 
 	if (timer <= 0) ResetGame();
 
-	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) 
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 	{
 		Respawn();
 	}
@@ -243,7 +247,7 @@ update_status ModulePlayer::Update(float dt)
 	{
 		if (activeGravity) {
 			activeGravity = false;
-			
+
 		}
 		else {
 			activeGravity = true;
@@ -267,7 +271,7 @@ update_status ModulePlayer::Update(float dt)
 	{
 		canJump = false;
 		if (activeImpulse) vehicle->Push(0, 3000, 0);
-		
+
 		if (!playJumpFx)
 		{
 			playJumpFx = true;
@@ -316,44 +320,44 @@ update_status ModulePlayer::Update(float dt)
 	}
 
 	float turbo = 0;
-	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) 
+	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 	{
 		if (activeImpulse)
 			turbo = 3000;
 	}
 
-	if (turbo > 0) 
+	if (turbo > 0)
 	{
-		if (!playTurboFx) 
+		if (!playTurboFx)
 		{
 			playTurboFx = true;
 			App->audio->PlayFx(turboFx);
 		}
 	}
-	else 
+	else
 	{
 		if (playTurboFx) playTurboFx = false;
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		acceleration += MAX_ACCELERATION + turbo;
 		//brake = BRAKE_POWER;
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		if(turn < TURN_DEGREES)
-			turn +=  TURN_DEGREES;
+		if (turn < TURN_DEGREES)
+			turn += TURN_DEGREES;
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		if(turn > -TURN_DEGREES)
+		if (turn > -TURN_DEGREES)
 			turn -= TURN_DEGREES;
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
 		//brake = BRAKE_POWER;
 		acceleration += -MAX_ACCELERATION;
@@ -368,19 +372,19 @@ update_status ModulePlayer::Update(float dt)
 
 	char title[120];
 	sprintf_s(title, "Sandy Shores Circuit | %.1f Km/h | Time: %.f s | Lap: %d / 3", vehicle->GetKmh(), timer, laps);
-	
+
 	if (laps >= MAX_LAPS)
 	{
-		sprintf_s(title, "Sandy Shores Circuit | %.1f Km/h | Time: %.f s | Lap: %d / %d | Con fucking gratulations." , vehicle->GetKmh(), timer, laps, MAX_LAPS);
+		sprintf_s(title, "Sandy Shores Circuit | %.1f Km/h | Time: %.f s | Lap: %d / %d | Con fucking gratulations.", vehicle->GetKmh(), timer, laps, MAX_LAPS);
 	}
 	App->window->SetTitle(title);
 	return UPDATE_CONTINUE;
 }
 
-void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2) 
+void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 	//LOG("OnCollision vehicle");
-	
+
 	switch (body2->id) {
 	case 2: // Death field
 		LOG("Deathfield collision");
@@ -388,7 +392,7 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		break;
 	case 3: // 1st checkpoint
 		LOG("1st checkpoint.");
-		if (!firstcPoint) 
+		if (!firstcPoint)
 		{
 			App->audio->PlayFx(checkpointFx);
 			respawnTransform[0] = 1;
@@ -434,7 +438,7 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		break;
 	case 6: // 2nd checkpoint
 		LOG("2nd checkpoint.");
-		if (!secondcPoint && firstcPoint) 
+		if (!secondcPoint && firstcPoint)
 		{
 			App->audio->PlayFx(checkpointFx);
 			respawnTransform[0] = -1;
@@ -497,7 +501,7 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		break;
 	case 9:
 		LOG("5th checkpoint.");
-		if (!fifthcPoint && fourthcPoint && thirdcPoint && secondcPoint && 
+		if (!fifthcPoint && fourthcPoint && thirdcPoint && secondcPoint &&
 			firstcPoint)
 		{
 			App->audio->PlayFx(checkpointFx);
@@ -522,6 +526,15 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		if (fifthcPoint && fourthcPoint && thirdcPoint && secondcPoint &&
 			firstcPoint)
 		{
+			if (laps >= MAX_LAPS) 
+			{
+				App->audio->PlayFx(winFx);
+			}
+			else 
+			{
+				App->audio->PlayFx(goalFx);
+			}
+
 			respawnTransform[0] = 1;
 			respawnTransform[1] = 0;
 			respawnTransform[2] = 0;

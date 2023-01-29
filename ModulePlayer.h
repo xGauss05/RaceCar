@@ -54,7 +54,8 @@ public:
 	mat4x4 respawnTransform;
 
 private:
-	int checkpointFx, turboFx, honkFx, jumpFx;
+	int checkpointFx, turboFx, honkFx, jumpFx, deathFx,
+		goalFx, winFx;
 	
 	uint lastTerrain = 0;
 };
