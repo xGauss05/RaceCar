@@ -43,10 +43,11 @@ public:
 	bool activeFriction = true;
 	bool canJump;
 	bool playTurboFx = false;
+	bool playJumpFx = false;
 	bool firstcPoint, secondcPoint, thirdcPoint, fourthcPoint, fifthcPoint;
 	uint laps;
 private:
-	int checkpointFx, turboFx;
+	int checkpointFx, turboFx, honkFx, jumpFx;
 	
 	uint lastTerrain = 0;
 };

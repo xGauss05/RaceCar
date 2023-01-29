@@ -20,6 +20,9 @@ bool ModulePlayer::Start()
 
 	checkpointFx = App->audio->LoadFx("Assets/Audio/Sfx/checkpoint.wav");
 	turboFx = App->audio->LoadFx("Assets/Audio/Sfx/turbo.wav");
+	honkFx = App->audio->LoadFx("Assets/Audio/Sfx/honk.wav");
+	jumpFx = App->audio->LoadFx("Assets/Audio/Sfx/jump.wav");
+	
 	VehicleInfo car;
 	// Car properties ----------------------------------------
 	car.chassis_size.Set(2, 2, 4);
@@ -157,14 +160,14 @@ void ModulePlayer::ChangeFriction(float friction)
 update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
-	
+
 	vehicle->GetTransform(vehicleSensor.transform.M);
 	vehicleSensorBody->SetTransform(vehicleSensor.transform.M);
 
-	if (App->physics->debug){ vehicleSensor.Render(); }
+	if (App->physics->debug) { vehicleSensor.Render(); }
 
 	if (timer >= 0) timer -= dt;
-	
+
 	if (timer <= 0) ResetGame();
 
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
@@ -175,7 +178,7 @@ update_status ModulePlayer::Update(float dt)
 		vehicle->vehicle->getRigidBody()->setMassProps(mass, vehicle->vehicle->getRigidBody()->getLocalInertia());
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) 
+	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 	{
 		mass -= 10.0f;
 		vehicle->vehicle->getRigidBody()->setMassProps(mass, vehicle->vehicle->getRigidBody()->getLocalInertia());
@@ -207,7 +210,7 @@ update_status ModulePlayer::Update(float dt)
 				ChangeFriction(5000.0f);
 				break;
 			}
-			
+
 		}
 	}
 
@@ -224,7 +227,7 @@ update_status ModulePlayer::Update(float dt)
 	if (!activeGravity) {
 		App->physics->ModifyGravity({ 0, 0,0 });
 	}
-	
+
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
@@ -233,6 +236,21 @@ update_status ModulePlayer::Update(float dt)
 			LOG("dt = %f; jump = %f", dt, jump);
 			vehicle->Push(0, jump, 0);
 		}
+		if (!playJumpFx)
+		{
+			playJumpFx = true;
+			App->audio->PlayFx(jumpFx);
+		}
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+	{
+		if (playJumpFx) playJumpFx = false;
+	}
+
+	// Honk
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+	{
+		App->audio->PlayFx(honkFx);
 	}
 
 	float turbo = 0;
