@@ -56,7 +56,7 @@ bool ModulePlayer::Start()
 	car.wheels = new Wheel[4];
 
 	// FRONT-LEFT ------------------------
-	car.wheels[0].connection.Set(half_width - 0.1f * wheel_width, connection_height, half_length - wheel_radius*0.5f);
+	car.wheels[0].connection.Set(half_width - 0.1f * wheel_width, connection_height, half_length - wheel_radius * 0.5f);
 	car.wheels[0].direction = direction;
 	car.wheels[0].axis = axis;
 	car.wheels[0].suspensionRestLength = suspensionRestLength;
@@ -68,7 +68,7 @@ bool ModulePlayer::Start()
 	car.wheels[0].steering = true;
 
 	// FRONT-RIGHT ------------------------
-	car.wheels[1].connection.Set(-half_width + 0.1f * wheel_width, connection_height, half_length - wheel_radius*0.5f);
+	car.wheels[1].connection.Set(-half_width + 0.1f * wheel_width, connection_height, half_length - wheel_radius * 0.5f);
 	car.wheels[1].direction = direction;
 	car.wheels[1].axis = axis;
 	car.wheels[1].suspensionRestLength = suspensionRestLength;
@@ -80,7 +80,7 @@ bool ModulePlayer::Start()
 	car.wheels[1].steering = true;
 
 	// REAR-LEFT ------------------------
-	car.wheels[2].connection.Set(half_width - 0.1f * wheel_width, connection_height, -half_length + wheel_radius*0.5f);
+	car.wheels[2].connection.Set(half_width - 0.1f * wheel_width, connection_height, -half_length + wheel_radius * 0.5f);
 	car.wheels[2].direction = direction;
 	car.wheels[2].axis = axis;
 	car.wheels[2].suspensionRestLength = suspensionRestLength;
@@ -92,7 +92,7 @@ bool ModulePlayer::Start()
 	car.wheels[2].steering = false;
 
 	// REAR-RIGHT ------------------------
-	car.wheels[3].connection.Set(-half_width + 0.1f * wheel_width, connection_height, -half_length + wheel_radius* 0.5f);
+	car.wheels[3].connection.Set(-half_width + 0.1f * wheel_width, connection_height, -half_length + wheel_radius * 0.5f);
 	car.wheels[3].direction = direction;
 	car.wheels[3].axis = axis;
 	car.wheels[3].suspensionRestLength = suspensionRestLength;
@@ -123,7 +123,7 @@ bool ModulePlayer::Start()
 	laps = 0;
 	firstcPoint = secondcPoint = thirdcPoint = fourthcPoint = fifthcPoint = false;
 	respawnPosition = { 0,0,0 };
-	
+
 	return true;
 }
 
@@ -145,7 +145,7 @@ void ModulePlayer::ResetGame()
 	vehicle->SetPos(0, 5, 0);
 	timer = 60;
 	laps = 0;
-	
+
 	firstcPoint = secondcPoint = thirdcPoint = fourthcPoint = fifthcPoint = false;
 }
 
@@ -199,75 +199,63 @@ update_status ModulePlayer::Update(float dt)
 
 	if (timer <= 0) ResetGame();
 
-	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
-	{
-		Respawn();
-	}
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) Respawn();
 
-	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN) {
-		mass += 10.0f;
-		vehicle->vehicle->getRigidBody()->setMassProps(mass, vehicle->vehicle->getRigidBody()->getLocalInertia());
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	if (App->physics->debug) 
 	{
-		mass -= 10.0f;
-		vehicle->vehicle->getRigidBody()->setMassProps(mass, vehicle->vehicle->getRigidBody()->getLocalInertia());
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
-	{
-		if (activeImpulse) {
-			activeImpulse = false;
+		if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+		{
+			mass += 10.0f;
+			vehicle->vehicle->getRigidBody()->setMassProps(mass, vehicle->vehicle->getRigidBody()->getLocalInertia());
 		}
-		else {
-			activeImpulse = true;
-		}
-	}
 
-	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
-	{
-		if (activeFriction) {
-			activeFriction = false;
-			ChangeFriction(0.0f);
+		if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+		{
+			mass -= 10.0f;
+			vehicle->vehicle->getRigidBody()->setMassProps(mass, vehicle->vehicle->getRigidBody()->getLocalInertia());
 		}
-		else {
-			activeFriction = true;
-			switch (lastTerrain) {
-			case 0:
-				ChangeFriction(2.0f);
-				break;
-			case 1:
-				ChangeFriction(800.0f);
-				break;
+
+		if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		{
+			if (activeImpulse) activeImpulse = false;
+			else activeImpulse = true;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+		{
+			if (activeFriction)
+			{
+				activeFriction = false;
+				ChangeFriction(0.0f);
 			}
+			else
+			{
+				activeFriction = true;
+				switch (lastTerrain)
+				{
+				case 0:
+					ChangeFriction(2.0f);
+					break;
+				case 1:
+					ChangeFriction(800.0f);
+					break;
+				}
+			}
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+		{
+			if (activeGravity) activeGravity = false;
+			else activeGravity = true;
 
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
-	{
-		if (activeGravity) {
-			activeGravity = false;
+	if (!activeGravity) vehicle->SetGravity(0, 0, 0);
 
-		}
-		else {
-			activeGravity = true;
-		}
-	}
+	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_DOWN) StartDrift();
 
-	if (!activeGravity) {
-		vehicle->SetGravity(0, 0, 0);
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_DOWN)
-	{
-		StartDrift();
-	}
-	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_UP)
-	{
-		EndDrift();
-	}
+	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_UP) EndDrift();
 
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && canJump)
 	{
@@ -308,24 +296,20 @@ update_status ModulePlayer::Update(float dt)
 			isFlipping = true;
 		}
 
-		if (isFlipping) {
+		if (isFlipping)
+		{
 			direction = direction * flip;
 			vehicle->SetAngularVelocity(direction.x, direction.y, direction.z);
 		}
 	}
 
-
 	// Honk
-	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
-	{
-		App->audio->PlayFx(honkFx);
-	}
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) App->audio->PlayFx(honkFx);
 
 	float turbo = 0;
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 	{
-		if (activeImpulse)
-			turbo = 3000;
+		if (activeImpulse) turbo = 3000;
 	}
 
 	if (turbo > 0)
@@ -349,14 +333,12 @@ update_status ModulePlayer::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		if (turn < TURN_DEGREES)
-			turn += TURN_DEGREES;
+		if (turn < TURN_DEGREES) turn += TURN_DEGREES;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		if (turn > -TURN_DEGREES)
-			turn -= TURN_DEGREES;
+		if (turn > -TURN_DEGREES) turn -= TURN_DEGREES;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
@@ -366,10 +348,9 @@ update_status ModulePlayer::Update(float dt)
 		brake = turbo;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) 
-	{
-		ResetGame();
-	}
+	// Reset game
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) ResetGame();
+
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
@@ -383,6 +364,7 @@ update_status ModulePlayer::Update(float dt)
 	{
 		sprintf_s(title, "Sandy Shores Circuit | %.1f Km/h | Time: %.f s | Lap: %d / %d | YOU WON! Press RETURN to Reset", vehicle->GetKmh(), timer, laps, MAX_LAPS);
 	}
+
 	App->window->SetTitle(title);
 	return UPDATE_CONTINUE;
 }
@@ -428,7 +410,7 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 				ChangeFriction(2.0f);
 			}
 		}
-			
+
 		break;
 	case 5:	//Asphalt
 		lastTerrain = 1;
@@ -440,7 +422,7 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 				ChangeFriction(5000.0f);
 			}
 		}
-			
+
 		break;
 	case 6: // 2nd checkpoint
 		LOG("2nd checkpoint.");
@@ -532,12 +514,12 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		if (fifthcPoint && fourthcPoint && thirdcPoint && secondcPoint &&
 			firstcPoint)
 		{
-			if (laps >= MAX_LAPS) 
+			if (laps >= MAX_LAPS)
 			{
 				App->audio->PlayFx(winFx);
-				
+
 			}
-			else 
+			else
 			{
 				App->audio->PlayFx(goalFx);
 			}
