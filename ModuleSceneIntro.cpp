@@ -282,10 +282,45 @@ void Circuit::Start() {
 		doorBody1Left = App->physics->AddBody(door1Left, 100);
 		doorBody1Left->id = 5;
 		
-
 		App->physics->AddConstraintHinge(*doorBody1Left, *columnBody1Left, { 0, 0, 5 }, { 0, 0, 0 }, { 0, 1, 0 }, { 0, 1, 0 });
 
 
+	}
+
+	// cacti
+	{
+		Color color;
+		color.Set(0, 1, 0);
+
+		cactus1.SetPos(10, 5, 20);
+		cactus1.size.Set(2, 6, 2);
+		cactus1.color = color;
+		cactusBody1 = App->physics->AddBody(cactus1, 12);
+		cactusBody1->id = 5;
+
+		cactus2.SetPos(-10, 5, -20);
+		cactus2.size.Set(2, 6, 2);
+		cactus2.color = color;
+		cactusBody2 = App->physics->AddBody(cactus2, 12);
+		cactusBody2->id = 5;
+
+		cactus3.SetPos(20, 5, -20);
+		cactus3.size.Set(2, 6, 2);
+		cactus3.color = color;
+		cactusBody3 = App->physics->AddBody(cactus3, 12);
+		cactusBody3->id = 5;
+
+		cactus4.SetPos(-10, 5, 20);
+		cactus4.size.Set(2, 6, 2);
+		cactus4.color = color;
+		cactusBody4 = App->physics->AddBody(cactus4, 12);
+		cactusBody4->id = 5;
+
+		cactus5.SetPos(-30, 5, 20);
+		cactus5.size.Set(2, 6, 2);
+		cactus5.color = color;
+		cactusBody5 = App->physics->AddBody(cactus5, 12);
+		cactusBody5->id = 5;
 	}
 }
 
@@ -409,6 +444,24 @@ void Circuit::Render() {
 		column1Left.Render();
 
 
+	}
+
+	// cacti
+	{
+		cactusBody1->GetTransform(cactus1.transform.M);
+		cactus1.Render();
+
+		cactusBody2->GetTransform(cactus2.transform.M);
+		cactus2.Render();
+		
+		cactusBody3->GetTransform(cactus3.transform.M);
+		cactus3.Render();
+
+		cactusBody4->GetTransform(cactus4.transform.M);
+		cactus4.Render();
+
+		cactusBody5->GetTransform(cactus5.transform.M);
+		cactus5.Render();
 	}
 }
 
