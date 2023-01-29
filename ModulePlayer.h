@@ -36,9 +36,14 @@ public:
 	float brake;
 	float mass;
 	float timer;
+	
+	bool activeGravity = true;
+	bool activeImpulse = true;
+	bool activeFriction = true;
 	bool canJump;
 	bool firstcPoint, secondcPoint, thirdcPoint, fourthcPoint, fifthcPoint;
 	uint laps;
 private:
 	uint checkpointFx;
+	uint lastTerrain = 0;
 };

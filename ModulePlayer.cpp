@@ -175,15 +175,64 @@ update_status ModulePlayer::Update(float dt)
 		vehicle->vehicle->getRigidBody()->setMassProps(mass, vehicle->vehicle->getRigidBody()->getLocalInertia());
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+	{
+		if (activeImpulse) {
+			activeImpulse = false;
+		}
+		else {
+			activeImpulse = true;
+		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+	{
+		if (activeFriction) {
+			activeFriction = false;
+			ChangeFriction(0.0f);
+		}
+		else {
+			activeFriction = true;
+			switch (lastTerrain) {
+			case 0:
+				ChangeFriction(2.0f);
+				break;
+			case 1:
+				ChangeFriction(5000.0f);
+				break;
+			}
+			
+		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+	{
+		if (activeGravity) {
+			activeGravity = false;
+		}
+		else {
+			activeGravity = true;
+		}
+	}
+
+	if (!activeGravity) {
+		App->physics->ModifyGravity({ 0, 0,0 });
+	}
+	
+
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		float jump = 200 * dt * 1000;
-		vehicle->Push(0, jump, 0);
+		if (activeImpulse) {
+			float jump = 60000 / (dt * 1000);
+			LOG("dt = %f; jump = %f", dt, jump);
+			vehicle->Push(0, jump, 0);
+		}
 	}
 
 	float turbo = 0;
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
-		turbo = 500;
+		if (activeImpulse)
+			turbo = 500;
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
@@ -242,11 +291,15 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 			firstcPoint = true;
 		}
 		break;
-	case 4:	// Sand
-		ChangeFriction(2.0f);
+	case 4:	//Sand
+		lastTerrain = 0;
+		if (activeFriction)
+			ChangeFriction(2.0f);
 		break;
-	case 5:	// Asphalt
-		ChangeFriction(5000.0f);
+	case 5:	//Asphalt
+		lastTerrain = 1;
+		if (activeFriction)
+			ChangeFriction(5000.0f);
 		break;
 	case 6: // 2nd checkpoint
 		LOG("2nd checkpoint.");
