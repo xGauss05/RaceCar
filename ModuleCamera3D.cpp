@@ -48,9 +48,9 @@ update_status ModuleCamera3D::Update(float dt)
 
 	if (cameraDebug) {
 		vec3 newPos(0, 0, 0);
-		float speed = 3.0f * dt;
+		float speed = 8.0f * dt;
 		if (App->input->GetKey(SDL_SCANCODE_RCTRL) == KEY_REPEAT)
-			speed = 8.0f * dt;
+			speed = 16.0f * dt;
 
 		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) newPos.y += speed;
 		if (App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_REPEAT) newPos.y -= speed;
