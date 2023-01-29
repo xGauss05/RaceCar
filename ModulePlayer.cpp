@@ -245,8 +245,20 @@ update_status ModulePlayer::Update(float dt)
 		if (playJumpFx) playJumpFx = false;
 	}
 
+	// Flip
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT)
+	{
+		vehicle->SetAngularVelocity(0, 0, -2);
+	}
+	
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT)
+	{
+		vehicle->SetAngularVelocity(0, 0, 2);
+	}
+
+
 	// Honk
-	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{
 		App->audio->PlayFx(honkFx);
 	}
