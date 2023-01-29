@@ -325,7 +325,7 @@ update_status ModulePlayer::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 	{
 		if (activeImpulse)
-			turbo = 3000;
+			turbo = 3500;
 	}
 
 	if (turbo > 0)
