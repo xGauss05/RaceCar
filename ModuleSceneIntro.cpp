@@ -21,7 +21,7 @@ void Circuit::Start() {
 	
 
 	sandPath.SetPos(0, 1, 0);
-	sandPath.size.Set(20, 0.5f, 100);
+	sandPath.size.Set(125, 0.9f, 175);
 	sandPath.color.Set(0.989f, 0.873f, 0.451f);
 
 	columnGoalLeft.SetPos(-5, 3, 0);
@@ -130,6 +130,31 @@ void Circuit::Start() {
 		corridorBody4 = App->physics->AddBody(corridor4, 0);
 		corridorBody4->id = 5;
 
+		corridor5.SetPos(120, 35, -118);
+		corridor5.size.Set(30, 2, 70);
+		corridor5.color = color;
+		corridorBody5 = App->physics->AddBody(corridor5, 0);
+		corridorBody5->id = 5;
+
+		corridor6.SetPos(120, 35, -168);
+		corridor6.size.Set(30, 2, 30);
+		corridor6.color = color;
+		corridorBody6 = App->physics->AddBody(corridor6, 0);
+		corridorBody6->id = 5;
+
+		corridor7.SetPos(105, 35, -183);
+		corridor7.size.Set(42.426f, 2, 42.426f);
+		corridor7.SetRotation(45, { 0, 1, 0 });
+		corridor7.color = color;
+		corridorBody7 = App->physics->AddBody(corridor7, 0);
+		corridorBody7->id = 5;
+
+		corridor8.SetPos(90, 35, -198);
+		corridor8.size.Set(30, 2, 30);
+		corridor8.color = color;
+		corridorBody8 = App->physics->AddBody(corridor8, 0);
+		corridorBody8->id = 5;
+
 	}
 	
 
@@ -204,6 +229,14 @@ void Circuit::Render() {
 		corridor3.Render();
 
 		corridor4.Render();
+
+		corridor5.Render();
+
+		corridor6.Render();
+
+		corridor7.Render();
+
+		corridor8.Render();
 	}
 }
 

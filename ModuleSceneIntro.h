@@ -73,6 +73,18 @@ struct Circuit {
 	Cube corridor4;
 	PhysBody3D* corridorBody4;
 
+	Cube corridor5;
+	PhysBody3D* corridorBody5;
+
+	Cube corridor6;
+	PhysBody3D* corridorBody6;
+
+	Cube corridor7;
+	PhysBody3D* corridorBody7;
+
+	Cube corridor8;
+	PhysBody3D* corridorBody8;
+
 	// path
 	Cube sandPath;
 
