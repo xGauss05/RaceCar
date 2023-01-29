@@ -178,6 +178,7 @@ struct Circuit {
 	Cube cactus5;
 	PhysBody3D* cactusBody5;
 
+	int textureTest;
 };
 
 class ModuleSceneIntro : public Module

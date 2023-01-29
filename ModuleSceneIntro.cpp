@@ -339,11 +339,14 @@ void Circuit::Start() {
 		cactusBody5 = App->physics->AddBody(cactus5, 12);
 		cactusBody5->id = 5;
 	}
+
+	textureTest = App->renderer3D->LoadTexture("Assets/Textures/elmo.jpg");
 }
 
 void Circuit::Render() {
 
-	
+	App->renderer3D->DrawTexture(textureTest, { 0,10,0 }, 5, false);
+
 	bottomSensorBody->GetTransform(bottomSensor.transform.M);
 	bottomSensor.Render();
 
