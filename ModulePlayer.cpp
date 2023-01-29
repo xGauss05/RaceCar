@@ -108,6 +108,8 @@ bool ModulePlayer::Start()
 	
 	vehicle->collision_listeners.add(this);
 	
+	App->physics->AddConstraintP2P(*vehicle, *vehicleSensorBody, { 0, 0, 0 }, { 0, 0, 0 });
+
 	return true;
 }
 
@@ -135,7 +137,7 @@ update_status ModulePlayer::Update(float dt)
 	
 	vehicle->GetTransform(vehicleSensor.transform.M);
 	vehicleSensorBody->SetTransform(vehicleSensor.transform.M);
-	
+
 	vehicleSensor.Render();
 
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
