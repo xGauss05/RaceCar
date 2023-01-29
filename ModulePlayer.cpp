@@ -217,7 +217,7 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	switch (body2->id) {
 	case 2:
 		ResetGame();
-		
+		break;
 	case 3:
 		LOG("1st checkpoint.");
 		if (!firstcPoint) {
