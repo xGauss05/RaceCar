@@ -53,6 +53,7 @@ bool ModulePhysics3D::Start()
 	world = new btDiscreteDynamicsWorld(dispatcher, broad_phase, solver, collision_conf);
 	world->setDebugDrawer(debug_draw);
 	world->setGravity(GRAVITY);
+	
 	vehicle_raycaster = new btDefaultVehicleRaycaster(world);
 
 	// Big plane as ground
@@ -109,6 +110,12 @@ update_status ModulePhysics3D::PreUpdate(float dt)
 	return UPDATE_CONTINUE;
 }
 
+void ModulePhysics3D::ModifyGravity(btVector3 amount)
+{ 
+	btVector3 gravity = world->getGravity() + amount;
+	world->setGravity(gravity);
+}
+
 // ---------------------------------------------------------
 update_status ModulePhysics3D::Update(float dt)
 {
@@ -134,6 +141,28 @@ update_status ModulePhysics3D::Update(float dt)
 			float force = 30.0f;
 			AddBody(s)->Push(-(App->camera->Z.x * force), -(App->camera->Z.y * force), -(App->camera->Z.z * force));
 		}
+
+		if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN) 
+			ModifyGravity(btVector3(5.0f, 0.0f, 0.0f));
+		
+		if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN) 
+			ModifyGravity(btVector3(0.0f, 5.0f, 0.0f));
+		
+		if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) 
+			ModifyGravity(btVector3(0.0f, 0.0f, 5.0f));
+		
+		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN) 
+			ModifyGravity(btVector3(-5.0f, -10.0f, 0.0f));
+		
+		if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN) 
+			ModifyGravity(btVector3(0.0f, -5.0f, 0.0f));
+		
+		if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN) 
+			ModifyGravity(btVector3(0.0f, 0.0f, -5.0f));
+		
+	}
+	else {
+		world->setGravity(GRAVITY);
 	}
 
 	return UPDATE_CONTINUE;
