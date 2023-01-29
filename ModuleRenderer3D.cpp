@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleRenderer3D.h"
 #include "SDL_image/include/SDL_image.h"
+#include "glmath.h"
 #include "SDL\include\SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
@@ -183,7 +184,9 @@ int ModuleRenderer3D::LoadTexture(const char* path) {
 	return texture;
 }
 
-void ModuleRenderer3D::DrawTexture(uint texture, vec3 pos, float size, bool orientationY) {
+void ModuleRenderer3D::DrawTexture(uint texture, vec3 pos, float size, bool orientationY, float rotation) {
+
+	rotation = rotation * 0.0174533f;
 
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, texture);
@@ -191,18 +194,18 @@ void ModuleRenderer3D::DrawTexture(uint texture, vec3 pos, float size, bool orie
 	glBegin(GL_QUADS);
 	if (orientationY == true) {
 		glTexCoord2f(0, 0); glVertex3f(pos.x, pos.y, pos.z);
-		glTexCoord2f(0, 1); glVertex3f(pos.x, pos.y + size, pos.z);
-		glTexCoord2f(1, 1); glVertex3f(pos.x + size, pos.y + size, pos.z);
-		glTexCoord2f(1, 0); glVertex3f(pos.x + size, pos.y, pos.z);
+		glTexCoord2f(0, 1); glVertex3f(pos.x, pos.y - size, pos.z);
+		glTexCoord2f(1, 1); glVertex3f(pos.x - cos(rotation) * size, pos.y - size, pos.z - sin(rotation) * size);
+		glTexCoord2f(1, 0); glVertex3f(pos.x - cos(rotation) * size, pos.y, pos.z - sin(rotation) * size);
 	}
 	else {
 		pos.x -= 37.5;
 		pos.y += 0;
 		pos.z -= 37.5;
 		glTexCoord2f(0, 0); glVertex3f(pos.x, pos.y, pos.z);
-		glTexCoord2f(0, 1); glVertex3f(pos.x, pos.y, pos.z + size);
-		glTexCoord2f(1, 1); glVertex3f(pos.x + size, pos.y, pos.z + size);
-		glTexCoord2f(1, 0); glVertex3f(pos.x + size, pos.y, pos.z);
+		glTexCoord2f(0, 1); glVertex3f(pos.x, pos.y, pos.z - size);
+		glTexCoord2f(1, 1); glVertex3f(pos.x - size, pos.y, pos.z - size);
+		glTexCoord2f(1, 0); glVertex3f(pos.x - size, pos.y, pos.z);
 	}
 	glEnd();
 
