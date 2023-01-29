@@ -9,6 +9,7 @@ struct PhysVehicle3D;
 #define MAX_ACCELERATION 1000.0f
 #define TURN_DEGREES 15.0f * DEGTORAD
 #define BRAKE_POWER 2.0f
+#define BONUS_TIME 5.0f
 
 class ModulePlayer : public Module
 {
@@ -36,7 +37,8 @@ public:
 	float mass;
 	float timer;
 	bool canJump;
-	bool firstcPoint, secondcPoint;
+	bool firstcPoint, secondcPoint, thirdcPoint, fourthcPoint, fifthcPoint;
+	uint laps;
 private:
 	uint checkpointFx;
 };

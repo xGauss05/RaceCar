@@ -214,19 +214,65 @@ void Circuit::Start() {
 		cpoint2SensorBody = App->physics->AddBody(cpoint2Sensor, 0);
 		cpoint2SensorBody->SetAsSensor(true);
 		cpoint2SensorBody->id = 6;
+
+		cpoint3Sensor.SetPos(120, 40, 0);
+		cpoint3Sensor.size.Set(30, 10, 3);
+		cpoint3Sensor.color.Set(0.8f, 0.3f, 0.2f, 0.1f);
+		cpoint3SensorBody = App->physics->AddBody(cpoint3Sensor, 0);
+		cpoint3SensorBody->SetAsSensor(true);
+		cpoint3SensorBody->id = 7;
+
+		cpoint4Sensor.SetPos(120, 40, -100);
+		cpoint4Sensor.size.Set(30, 10, 3);
+		cpoint4Sensor.color.Set(0.8f, 0.3f, 0.2f, 0.1f);
+		cpoint4SensorBody = App->physics->AddBody(cpoint4Sensor, 0);
+		cpoint4SensorBody->SetAsSensor(true);
+		cpoint4SensorBody->id = 8;
+
+		cpoint5Sensor.SetPos(0, 40, -100);
+		cpoint5Sensor.size.Set(30, 10, 3);
+		cpoint5Sensor.color.Set(0.8f, 0.3f, 0.2f, 0.1f);
+		cpoint5SensorBody = App->physics->AddBody(cpoint5Sensor, 0);
+		cpoint5SensorBody->SetAsSensor(true);
+		cpoint5SensorBody->id = 9;
 	}
 }
 
 void Circuit::Render() {
 
+	
 	bottomSensorBody->GetTransform(bottomSensor.transform.M);
 	bottomSensor.Render();
 
-	cpoint1SensorBody->GetTransform(cpoint1Sensor.transform.M);
-	cpoint1Sensor.Render();
+	if (!App->player->firstcPoint) 
+	{
+		cpoint1SensorBody->GetTransform(cpoint1Sensor.transform.M);
+		cpoint1Sensor.Render();
+	}
 
-	cpoint2SensorBody->GetTransform(cpoint2Sensor.transform.M);
-	cpoint2Sensor.Render();
+	if (!App->player->secondcPoint)
+	{
+		cpoint2SensorBody->GetTransform(cpoint2Sensor.transform.M);
+		cpoint2Sensor.Render();
+	}
+
+	if (!App->player->thirdcPoint)
+	{
+		cpoint3SensorBody->GetTransform(cpoint3Sensor.transform.M);
+		cpoint3Sensor.Render();
+	}
+
+	if (!App->player->fourthcPoint)
+	{
+		cpoint4SensorBody->GetTransform(cpoint4Sensor.transform.M);
+		cpoint4Sensor.Render();
+	}
+
+	if (!App->player->fifthcPoint)
+	{
+		cpoint5SensorBody->GetTransform(cpoint5Sensor.transform.M);
+		cpoint5Sensor.Render();
+	}
 
 	// for mobile objects
 	obstacleBody->GetTransform(obstacle.transform.M);

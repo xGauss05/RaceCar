@@ -25,6 +25,17 @@ struct Circuit {
 	Cube cpoint2Sensor;
 	PhysBody3D* cpoint2SensorBody;
 
+	// 3rd checkpoint
+	Cube cpoint3Sensor;
+	PhysBody3D* cpoint3SensorBody;
+
+	// 4th checkpoint
+	Cube cpoint4Sensor;
+	PhysBody3D* cpoint4SensorBody;
+
+	// 5th checkpoint
+	Cube cpoint5Sensor;
+	PhysBody3D* cpoint5SensorBody;
 
 	Cube obstacle;
 	PhysBody3D* obstacleBody;

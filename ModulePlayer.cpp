@@ -113,7 +113,8 @@ bool ModulePlayer::Start()
 
 	timer = 60;
 	canJump = true;
-	firstcPoint = secondcPoint = false;
+	laps = 0;
+	firstcPoint = secondcPoint = thirdcPoint = fourthcPoint = fifthcPoint = false;
 	return true;
 }
 
@@ -134,7 +135,8 @@ void ModulePlayer::ResetGame()
 	vehicle->SetLinearVelocity(0, 0, 0);
 	vehicle->SetPos(0, 5, 0);
 	timer = 60;
-	firstcPoint = false;
+	laps = 0;
+	firstcPoint = secondcPoint = thirdcPoint = fourthcPoint = fifthcPoint = false;
 }
 
 void ModulePlayer::ChangeFriction(float friction)
@@ -227,7 +229,7 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	//LOG("OnCollision vehicle");
 	
 	switch (body2->id) {
-	case 2: //Death field
+	case 2: // Death field
 		LOG("Deathfield collision");
 		ResetGame();
 		break;
@@ -236,26 +238,53 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		if (!firstcPoint) 
 		{
 			//App->audio->PlayFx(checkpointFx);
-			timer += 10.0f;
-			body2->SetPos(0, 100, 0); // we need to do it better
+			timer += BONUS_TIME;
 			firstcPoint = true;
 		}
 		break;
-	case 4:	//Sand
+	case 4:	// Sand
 		ChangeFriction(2.0f);
 		break;
-	case 5:	//Asphalt
+	case 5:	// Asphalt
 		ChangeFriction(5000.0f);
 		break;
 	case 6: // 2nd checkpoint
 		LOG("2nd checkpoint.");
-		if (!secondcPoint) 
+		if (!secondcPoint && firstcPoint) 
 		{
 			//App->audio->PlayFx(checkpointFx);
-			timer += 10.0f;
-			body2->SetPos(0, 100, 0); // we need to do it better
+			timer += BONUS_TIME;
 			secondcPoint = true;
 		}
+		break;
+	case 7:
+		LOG("3rd checkpoint.");
+		if (!thirdcPoint && secondcPoint && firstcPoint)
+		{
+			//App->audio->PlayFx(checkpointFx);
+			timer += BONUS_TIME;
+			thirdcPoint = true;
+		}
+		break;
+	case 8:
+		LOG("4th checkpoint.");
+		if (!fourthcPoint && thirdcPoint && secondcPoint && firstcPoint)
+		{
+			//App->audio->PlayFx(checkpointFx);
+			timer += BONUS_TIME;
+			fourthcPoint = true;
+		}
+		break;
+	case 9:
+		LOG("5th checkpoint.");
+		if (!fifthcPoint && fourthcPoint && thirdcPoint && secondcPoint && 
+			firstcPoint)
+		{
+			//App->audio->PlayFx(checkpointFx);
+			timer += BONUS_TIME;
+			fifthcPoint = true;
+		}
+		break;
 	default: break;
 	}
 }
