@@ -364,14 +364,26 @@ void Circuit::Start() {
 	door1Texture = App->renderer3D->LoadTexture("Assets/Textures/open_door1.jpg");
 	door2Texture = App->renderer3D->LoadTexture("Assets/Textures/open_door2.jpg");
 	thisIsFine = App->renderer3D->LoadTexture("Assets/Textures/this_is_fine.jpg");
+	toilet = App->renderer3D->LoadTexture("Assets/Textures/toilet.jpg");
+	noWater = App->renderer3D->LoadTexture("Assets/Textures/no_water.jpg");
+	duo = App->renderer3D->LoadTexture("Assets/Textures/desertduo.jpg");
+	university = App->renderer3D->LoadTexture("Assets/Textures/university_work.jpg");
 }
 
 void Circuit::Render() {
 
 	App->renderer3D->DrawTexture(elmoTexture, { -500,-8,-500 }, -1000, false);
-	App->renderer3D->DrawTexture(door1Texture, { 60, 42, -213 }, 10, true);
-	App->renderer3D->DrawTexture(door2Texture, { 0,10,10 }, 10, true);
-	App->renderer3D->DrawTexture(thisIsFine, { -10,10,10 }, 10, true, 90.0f);
+	App->renderer3D->DrawTexture(door1Texture, { 60, 47, -173 }, 10, true, 90.0f);
+	App->renderer3D->DrawTexture(door2Texture, { 60, 47, -213 }, 10, true, 90.0f);
+	App->renderer3D->DrawTexture(thisIsFine, { 150, 60, 110 }, 30, true, 225.0f);
+	App->renderer3D->DrawTexture(toilet, { 15, 60, -10 }, 30, true);
+	App->renderer3D->DrawTexture(noWater, { 20, 60, 240 }, 40, true);
+	App->renderer3D->DrawTexture(duo, { -50, 22, 88 }, 20, true, 45);
+
+	if (App->scene_intro->youWin)
+	{
+		App->renderer3D->DrawTexture(university, { 10, 22, 50 }, 20, true);
+	}
 
 	bottomSensorBody->GetTransform(bottomSensor.transform.M);
 	bottomSensor.Render();

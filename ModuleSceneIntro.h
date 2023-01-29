@@ -188,6 +188,10 @@ struct Circuit {
 	int door1Texture;
 	int door2Texture;
 	int thisIsFine;
+	int toilet;
+	int noWater;
+	int duo;
+	int university;
 };
 
 class ModuleSceneIntro : public Module
@@ -228,4 +232,6 @@ public:
 
 	PhysMotor3D* left_wheel;
 	PhysMotor3D* right_wheel;*/
+
+	bool youWin = false;
 };

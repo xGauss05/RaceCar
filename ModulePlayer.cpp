@@ -147,6 +147,8 @@ void ModulePlayer::ResetGame()
 	laps = 0;
 
 	firstcPoint = secondcPoint = thirdcPoint = fourthcPoint = fifthcPoint = false;
+
+	App->scene_intro->youWin = false;
 }
 
 void ModulePlayer::Respawn()
@@ -364,6 +366,8 @@ update_status ModulePlayer::Update(float dt)
 	if (laps >= MAX_LAPS)
 	{
 		sprintf_s(title, "Sandy Shores Circuit | %.1f Km/h | Time: %.f s | Lap: %d / %d | YOU WON! Press RETURN to Reset", vehicle->GetKmh(), timer, laps, MAX_LAPS);
+
+		App->scene_intro->youWin = true;
 	}
 
 	App->window->SetTitle(title);
