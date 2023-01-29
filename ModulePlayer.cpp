@@ -136,6 +136,14 @@ void ModulePlayer::ResetGame()
 	firstcPoint = false;
 }
 
+void ModulePlayer::ChangeFriction(float friction)
+{
+	vehicle->vehicle->m_wheelInfo[0].m_frictionSlip = friction;
+	vehicle->vehicle->m_wheelInfo[1].m_frictionSlip = friction;
+	vehicle->vehicle->m_wheelInfo[2].m_frictionSlip = friction;
+	vehicle->vehicle->m_wheelInfo[3].m_frictionSlip = friction;
+}
+
 update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
@@ -143,13 +151,6 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->GetTransform(vehicleSensor.transform.M);
 	vehicleSensorBody->SetTransform(vehicleSensor.transform.M);
 
-	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) 
-	{ 
-		vehicle->vehicle->m_wheelInfo[0].m_frictionSlip = 0.1; 
-		vehicle->vehicle->m_wheelInfo[1].m_frictionSlip = 0.1; 
-		vehicle->vehicle->m_wheelInfo[2].m_frictionSlip = 0.1; 
-		vehicle->vehicle->m_wheelInfo[3].m_frictionSlip = 0.1; 
-	}
 
 	if (App->physics->debug){ vehicleSensor.Render(); }
 
@@ -224,10 +225,10 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	LOG("OnCollision vehicle");
 	
 	switch (body2->id) {
-	case 2:
+	case 2: //Death field
 		ResetGame();
 		break;
-	case 3:
+	case 3: //Checkpoint
 		LOG("1st checkpoint.");
 		if (!firstcPoint) {
 			//App->audio->PlayFx(checkpointFx);
@@ -235,7 +236,12 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 			body2->SetPos(0, 100, 0); // we need to do it better
 			firstcPoint = true;
 		}
-		
+		break;
+	case 4:	//Sand
+		ChangeFriction(2.0f);
+		break;
+	case 5:	//Asphalt
+		ChangeFriction(5000.0f);
 		break;
 	default: break;
 	}

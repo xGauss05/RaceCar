@@ -21,6 +21,8 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	bool CleanUp();
 	void ResetGame();
+
+	void ChangeFriction(float friction);
 	
 public:
 

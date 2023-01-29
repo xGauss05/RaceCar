@@ -17,6 +17,7 @@ void Circuit::Start() {
 	sandTerrain.size.Set(125, 2, 175);
 	sandTerrain.color.Set(1, 0.945f, 0.686f);
 	sandTerrainBody = App->physics->AddBody(sandTerrain, 0);
+	sandTerrainBody->id = 4;
 	
 
 	sandPath.SetPos(0, 1, 0);
@@ -44,49 +45,58 @@ void Circuit::Start() {
 		stairs1.size.Set(70, 2, 30);
 		stairs1.color = color;
 		stairsBody1 = App->physics->AddBody(stairs1, 0);
+		stairsBody1->id = 5;
 
 		stairs2.SetPos(0, 17.5f, 122.5f);
 		stairs2.size.Set(30, 2, 70);
 		stairs2.SetRotation(-30, { 1, 0, 0 });
 		stairs2.color = color;
 		stairsBody2 = App->physics->AddBody(stairs2, 0);
+		stairsBody2->id = 5;
 
 		stairs3.SetPos(0, 35, 168);
 		stairs3.size.Set(30, 2, 30);
 		stairs3.color = color;
 		stairsBody3 = App->physics->AddBody(stairs3, 0);
+		stairsBody3->id = 5;
 
 		stairs4.SetPos(15, 35, 183);
 		stairs4.size.Set(42.426f, 2, 42.426f);
 		stairs4.SetRotation(45, { 0, 1, 0 });
 		stairs4.color = color;
 		stairsBody4 = App->physics->AddBody(stairs4, 0);
+		stairsBody4->id = 5;
 
 		stairs5.SetPos(30, 35, 198);
 		stairs5.size.Set(30, 2, 30);
 		stairs5.color = color;
 		stairsBody5 = App->physics->AddBody(stairs5, 0);
+		stairsBody5->id = 5;
 
 		stairs6.SetPos(60, 35, 198);
 		stairs6.size.Set(30, 2, 30);
 		stairs6.color = color;
 		stairsBody6 = App->physics->AddBody(stairs6, 0);
+		stairsBody6->id = 5;
 
 		stairs7.SetPos(90, 35, 198);
 		stairs7.size.Set(30, 2, 30);
 		stairs7.color = color;
 		stairsBody7 = App->physics->AddBody(stairs7, 0);
+		stairsBody7->id = 5;
 
 		stairs8.SetPos(105, 35, 183);
 		stairs8.size.Set(42.426f, 2, 42.426f);
 		stairs8.SetRotation(45, { 0, 1, 0 });
 		stairs8.color = color;
 		stairsBody8 = App->physics->AddBody(stairs8, 0);
+		stairsBody8->id = 5;
 
 		stairs9.SetPos(120, 35, 168);
 		stairs9.size.Set(30, 2, 30);
 		stairs9.color = color;
 		stairsBody9 = App->physics->AddBody(stairs9, 0);
+		stairsBody9->id = 5;
 	}
 
 	// corridor
@@ -98,23 +108,27 @@ void Circuit::Start() {
 		corridor1.size.Set(30, 2, 70);
 		corridor1.color = color;
 		corridorBody1 = App->physics->AddBody(corridor1, 0);
+		corridorBody1->id = 5;
 
 		corridor2.SetPos(120, 35, 83);
 		corridor2.size.Set(30, 4, 5);
 		corridor2.SetRotation(30, { 1, 0, 0 });
 		corridor2.color = color;
 		corridorBody2 = App->physics->AddBody(corridor2, 0);
+		corridorBody2->id = 5;
 
 		corridor3.SetPos(120, 35, 0);
 		corridor3.size.Set(30, 2, 70);
 		corridor3.color = color;
 		corridorBody3 = App->physics->AddBody(corridor3, 0);
+		corridorBody3->id = 5;
 
 		corridor4.SetPos(120, 35, -35);
 		corridor4.size.Set(30, 4, 5);
 		corridor4.SetRotation(30, { 1, 0, 0 });
 		corridor4.color = color;
 		corridorBody4 = App->physics->AddBody(corridor4, 0);
+		corridorBody4->id = 5;
 
 	}
 	
