@@ -43,4 +43,4 @@ Remember to enable debug mode (F1) to access the keys.
 - Jonathan Cacay - [xGauss05](https://github.com/xGauss05)
 - Ethan Martín - [Ethanm-0371](https://github.com/Ethanm-0371)
 - Víctor Martín - [VicMarBall](https://github.com/VicMarBall)
-- Ariadna Sevick - [AriSevcik](https://github.com/AriSevcik)
+- Ariadna Sevcik - [AriSevcik](https://github.com/AriSevcik)
