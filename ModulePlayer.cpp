@@ -108,6 +108,8 @@ bool ModulePlayer::Start()
 	
 	vehicle->collision_listeners.add(this);
 	
+	App->physics->AddConstraintP2P(*vehicle, *vehicleSensorBody, { 0, 0, 0 }, { 0, 0, 0 });
+
 	timer = 60;
 	return true;
 }
@@ -137,7 +139,7 @@ update_status ModulePlayer::Update(float dt)
 	
 	vehicle->GetTransform(vehicleSensor.transform.M);
 	vehicleSensorBody->SetTransform(vehicleSensor.transform.M);
-	
+
 	vehicleSensor.Render();
 	if (timer >= 0) timer -= dt;
 	
