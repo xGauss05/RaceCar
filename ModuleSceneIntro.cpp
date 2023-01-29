@@ -8,10 +8,6 @@
 #include "PhysVehicle3D.h"
 
 void Circuit::Start() {
-	obstacle.SetPos(0, 2, 30);
-	obstacle.size.Set(10, 10, 10);
-	obstacle.color.Set(0, 255, 255);
-	obstacleBody = App->physics->AddBody(obstacle, 1000);
 
 	sandTerrain.SetPos(0, 0, 0);
 	sandTerrain.size.Set(125, 2, 175);
@@ -307,43 +303,70 @@ void Circuit::Start() {
 	// cacti
 	{
 		Color color;
-		color.Set(0, 1, 0);
+		color.Set(0.239f, 0.522f, 0.192f);
 
-		cactus1.SetPos(10, 5, 20);
+		cactus1.SetPos(10, 3, 20);
 		cactus1.size.Set(2, 6, 2);
 		cactus1.color = color;
-		cactusBody1 = App->physics->AddBody(cactus1, 12);
+		cactusBody1 = App->physics->AddBody(cactus1, 0);
 		cactusBody1->id = 5;
 
-		cactus2.SetPos(-10, 5, -20);
+		cactus2.SetPos(-10, 3, -20);
 		cactus2.size.Set(2, 6, 2);
 		cactus2.color = color;
-		cactusBody2 = App->physics->AddBody(cactus2, 12);
+		cactusBody2 = App->physics->AddBody(cactus2, 0);
 		cactusBody2->id = 5;
 
-		cactus3.SetPos(20, 5, -20);
+		cactus3.SetPos(20, 3, -20);
 		cactus3.size.Set(2, 6, 2);
 		cactus3.color = color;
-		cactusBody3 = App->physics->AddBody(cactus3, 12);
+		cactusBody3 = App->physics->AddBody(cactus3, 0);
 		cactusBody3->id = 5;
 
-		cactus4.SetPos(-10, 5, 20);
+		cactus4.SetPos(-10, 3, 20);
 		cactus4.size.Set(2, 6, 2);
 		cactus4.color = color;
-		cactusBody4 = App->physics->AddBody(cactus4, 12);
+		cactusBody4 = App->physics->AddBody(cactus4, 0);
 		cactusBody4->id = 5;
 
-		cactus5.SetPos(-30, 5, 20);
+		cactus5.SetPos(-30, 3, 20);
 		cactus5.size.Set(2, 6, 2);
 		cactus5.color = color;
-		cactusBody5 = App->physics->AddBody(cactus5, 12);
+		cactusBody5 = App->physics->AddBody(cactus5, 0);
 		cactusBody5->id = 5;
 	}
+
+	// desert balls
+	{
+		Color color;
+		color.Set(0.545f, 0.443f, 0.361f);
+
+		desertBall1.SetPos(15, 3, 10);
+		desertBall1.radius = 1;
+		desertBall1.color = color;
+		desertBallBody1 = App->physics->AddBody(desertBall1, 1);
+		desertBallBody1->id = 5;
+
+		desertBall2.SetPos(-15, 3, 14);
+		desertBall2.radius = 1;
+		desertBall2.color = color;
+		desertBallBody2 = App->physics->AddBody(desertBall2, 1);
+		desertBallBody2->id = 5;
+
+		desertBall3.SetPos(11, 3, -29);
+		desertBall3.radius = 1;
+		desertBall3.color = color;
+		desertBallBody3 = App->physics->AddBody(desertBall3, 1);
+		desertBallBody3->id = 5;
+	}
+
+	textureTest = App->renderer3D->LoadTexture("Assets/Textures/elmo.jpg");
 }
 
 void Circuit::Render() {
 
-	
+	App->renderer3D->DrawTexture(textureTest, { 0,10,0 }, 5, false);
+
 	bottomSensorBody->GetTransform(bottomSensor.transform.M);
 	bottomSensor.Render();
 
@@ -383,10 +406,6 @@ void Circuit::Render() {
 		cpointGoalSensorBody->GetTransform(cpointGoalSensor.transform.M);
 		cpointGoalSensor.Render();
 	}
-	
-	// for mobile objects
-	obstacleBody->GetTransform(obstacle.transform.M);
-	obstacle.Render();
 
 	// for static objects
 	sandTerrain.Render();
@@ -481,6 +500,20 @@ void Circuit::Render() {
 
 		cactusBody5->GetTransform(cactus5.transform.M);
 		cactus5.Render();
+	}
+
+	// desert ball
+	{
+		desertBallBody1->GetTransform(desertBall1.transform.M);
+		desertBall1.Render();
+
+		desertBallBody2->GetTransform(desertBall2.transform.M);
+		desertBall2.Render();
+
+		desertBallBody3->GetTransform(desertBall3.transform.M);
+		desertBall3.Render();
+
+
 	}
 }
 
