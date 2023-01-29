@@ -18,6 +18,7 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 
+	checkpointFx = App->audio->LoadFx("Assets/Audio/Sfx/checkpoint.wav");
 	VehicleInfo car;
 	// Car properties ----------------------------------------
 	car.chassis_size.Set(2, 2, 4);
@@ -111,6 +112,7 @@ bool ModulePlayer::Start()
 	App->physics->AddConstraintP2P(*vehicle, *vehicleSensorBody, { 0, 0, 0 }, { 0, 0, 0 });
 
 	timer = 60;
+	firstcPoint = false;
 	return true;
 }
 
@@ -131,6 +133,7 @@ void ModulePlayer::ResetGame()
 	vehicle->SetLinearVelocity(0, 0, 0);
 	vehicle->SetPos(0, 5, 0);
 	timer = 60;
+	firstcPoint = false;
 }
 
 update_status ModulePlayer::Update(float dt)
@@ -214,6 +217,15 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	switch (body2->id) {
 	case 2:
 		ResetGame();
+		
+	case 3:
+		LOG("1st checkpoint.");
+		if (!firstcPoint) {
+			//App->audio->PlayFx(checkpointFx);
+			timer += 10.0f;
+			body2->SetPos(0, 100, 0); // we need to do it better
+			firstcPoint = true;
+		}
 		
 		break;
 	default: break;

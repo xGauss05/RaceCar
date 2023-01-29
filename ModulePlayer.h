@@ -33,4 +33,7 @@ public:
 	float brake;
 	float mass;
 	float timer;
+	bool firstcPoint;
+private:
+	uint checkpointFx;
 };

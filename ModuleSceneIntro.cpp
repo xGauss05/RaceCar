@@ -129,6 +129,13 @@ void Circuit::Start() {
 		bottomSensorBody->SetAsSensor(true);
 		bottomSensorBody->collision_listeners.add(App->scene_intro);
 		bottomSensorBody->id = 2; 
+
+		cpoint1Sensor.SetPos(0, 7, 100);
+		cpoint1Sensor.size.Set(30, 15, 3);
+		cpoint1Sensor.color.Set(0.8f, 0.3f, 0.2f);
+		cpoint1SensorBody = App->physics->AddBody(cpoint1Sensor, 0);
+		cpoint1SensorBody->SetAsSensor(true);
+		cpoint1SensorBody->id = 3;
 	}
 }
 
@@ -136,6 +143,9 @@ void Circuit::Render() {
 	
 	bottomSensorBody->GetTransform(bottomSensor.transform.M);
 	bottomSensor.Render();
+
+	cpoint1SensorBody->GetTransform(cpoint1Sensor.transform.M);
+	cpoint1Sensor.Render();
 
 	// for mobile objects
 	obstacleBody->GetTransform(obstacle.transform.M);

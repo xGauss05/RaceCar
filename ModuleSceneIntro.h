@@ -13,8 +13,12 @@ struct Circuit {
 	void Start();
 
 	void Render();
+	// Void pit (hell)
 	Cube bottomSensor;
 	PhysBody3D* bottomSensorBody;
+
+	Cube cpoint1Sensor;
+	PhysBody3D* cpoint1SensorBody;
 
 	Cube obstacle;
 	PhysBody3D* obstacleBody;
